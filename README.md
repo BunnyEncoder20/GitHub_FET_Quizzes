@@ -4,6 +4,9 @@
 ## General information
 Made this repo to stage the development of my Cuvette FET project 2 - Quizzes. This is a Quiz making web application where we can create, analyze and share quizzes and polls  
 
+Ideabook [Link](https://ideabook.club/share/fa8729bb-f4bf-4fad-b759-97c1c4bbf772/)
+Figma [Link](https://www.figma.com/file/XYmWHdBvT55GOtfm9RAFCT/Quiz-Test-(Copy)?node-id=5%3A3380&mode=dev)
+
 **Packages which might be helpful for the project:**
 1. formik -  - [Link]('https://formik.org/')
 2. axios - for better get and post requests from client - [website]('https://axios-http.com/docs/intro')
@@ -37,8 +40,8 @@ npm i react-router-dom
 
 ### Installations
 ```
-npm init
-npm i express ejs dotenv mongoose bycrypt cors jsonwebtoken 
+npm init -y 
+npm i express ejs body-parser dotenv mongoose bcrypt cors jsonwebtoken 
 ```
 
 ### Need to make : 
@@ -132,6 +135,37 @@ When importing, you would use curly braces `{}` for named exports and no braces 
 ```javascript
 import DefaultExport, { NamedExport } from './file';
 ```
+---
+
+### Body-parser 
+- it is an important package which is used for reading req.body and the most basic useage can be summarized here : 
+```javascript
+var express = require('express');
+var bodyParser = require('body-parser');
+
+var app = express();
+
+// create application/json parser
+var jsonParser = bodyParser.json();
+
+// create application/x-www-form-urlencoded parser
+var urlencodedParser = bodyParser.urlencoded({ extended: false });
+
+// POST /login gets urlencoded bodies
+app.post('/login', urlencodedParser, function (req, res) {
+    res.send('welcome, ' + req.body.username);
+});
+
+// POST /api/users gets JSON bodies
+app.post('/api/users', jsonParser, function (req, res) {
+    // create user in req.body
+});
+
+module.exports = app;
+```
+- 
+
+---
 
 ### Redux 
 - is a centralized state management library
