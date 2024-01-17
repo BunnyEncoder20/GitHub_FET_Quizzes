@@ -163,83 +163,7 @@ app.post('/api/users', jsonParser, function (req, res) {
 
 module.exports = app;
 ```
-- 
 
----
-
-### Redux 
-- is a centralized state management library
-- it has a unidirectional data flow 
-- it is like a global single source of state 
-- it is read only
-- Changes are made using specialized functions called reducers 
-- NOTE: it is a predictable state container for js apps (not just react apps)
-- It comes with the following parts : 
-  - **store :** a (kinda global variable) in which all the states wil be stored. These can have smaller stores/ sections to them 
-  - **Reducers :** are the functions which make changes to the store and it's subsections
-  - **useSelector :** for when we want to select some property from the store 
-  - **useDispatch :** 
-
-- **The 3 Core Concepts of Redux are :**
-  1. `Store` : holds the state of our application
-  2. `Action` : describes what has happened
-  3. `Reducers` : ties the store and action together 
-
-- **The 3 Core Principles of Redux are :**
-  1. _The global state of your application is stored as an object inside a single store_ - maintain our application state in a single `object` which would be managed by the Redux `store`.
-  2. _The only way to change the state is to dispatch an action, an object that describes what happened_ - To update the state of your app, you need to let Redux know about that with an `action`. You are **Not** allowed to directly update the state object.
-  3. _To specify how the state tree is updated based on actions, you write pure reducers_
-  ```
-  Reducer - (previousState, action) => newState
-  ```
----
-#### Actions
-- The only way your application can interact with the store
-- Carry some information from your app to the redux store
-- Plain JavaScript objects
-- Must have a 'type' property that describes something that happened in the application.
-- The 'type' property is typically defined as string constants
-
-
-Installations : 
-```
-npm install @reduxjs/toolkit
-npm install react-redux
-```
-- Then make a file src/app/store
-- In it add the below code to initial and setup the store : 
-```
-import {configureStore} from '@reduxjs/toolkit';
-export const store = configureStore({})
-```
-- Next we make the reducers(slices in Redux Toolkit)
-- We made a new file : src/feature/quiz/quizSlice.js
-- inside it we import the createSlice method (and nanoid) and define the slice inside it 
-```
-import { createSlice, nanoid } from "@reduxjs/toolkit";
-
-const initialState = {
-    user: [{id: none, name:Bunny}]
-}
-
-export const quizSlice = createSlice({
-    name: 'quizSlice',
-    initialState: initialState,
-    reducers: {
-        // properties and functions here 
-        
-        setUser: (state, action) => {},
-        removeUSer: (state, action) => {},
-    }
-})
-```
-- **always** remember that when we are making the reducers methods , we get access to 2 variables : 
-  1. state - what is the current state looking like
-  2. action - to access what data was sen by the component 
-- Eg : 
-```
-
-```
 ---
 
 ## Context API for state management
@@ -285,6 +209,7 @@ export default USerContextProvider
 ```
 1. Making the App.js aware of the context by providing it with a wrapper
 ```javascript
+import { userContextProvider } from './path_to_your_file/userContext';
 function App() {
   
   return (
