@@ -10,6 +10,8 @@ Made this repo to stage the development of my Cuvette FET project 2 - Quizzes. T
 3. redux - for universal state management - [website]('https://redux.js.org/') 
 4. Material UI - for getting ready made components for rapid frontend development [Will not be using this for this project]
 5. Styles Components - for making using traditional CSS easier for the component age - [website](https://styled-components.com/docs) 
+6. React Viz - for making graphs with animations - [website]('https://uber.github.io/react-vis/documentation/getting-started/installing-react-vis')
+7. React Spring - for spring like animations - [website]('https://www.react-spring.dev/docs/getting-started')
 
 ---
 
@@ -22,20 +24,25 @@ Made this repo to stage the development of my Cuvette FET project 2 - Quizzes. T
 ```
 npx create-react-app .
 ```
-2. installing styles-components 
+2. installing react-router-dom : 
 ```
-npm install styled-components
+npm i react-router-dom
 ```
-3. installing redux toolkit for react 
-```
-npm install @reduxjs/toolkit
-npm install react-redux
-```
+- for learning exact how to use the react router : Watch this [YTvideo](https://youtu.be/WNU1BEZIjxg?si=WaH3F-b1BL_DvxVV)
+
+
 ---
 
 ## Server Side 
 
+### Installations
+```
+npm init
+npm i express ejs dotenv mongoose bycrypt cors jsonwebtoken 
+```
 
+### Need to make : 
+1. We going to need EJS for rendering the shareable link pages with the quiz data 
 ---
 
 ## Planning for the project 
@@ -318,4 +325,21 @@ export const UserContextProvider = ({props}) => {
   )
 } 
 ```
-- now we can import the context and the contextProvider  using the useContext Hook 
+- now we can import the context and the contextProvider using the useContext Hook 
+
+---
+
+### React Spring Animations : 
+
+Installations : 
+```
+npm i @react-spring/web
+```
+Importing : 
+```javascript
+import { animated } from '@react-spring/web'
+```
+The Hook 
+```javascript
+import { useSpring, animated } from '@react-spring/web'
+```
