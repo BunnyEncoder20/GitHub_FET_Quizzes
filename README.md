@@ -13,7 +13,7 @@ Made this repo to stage the development of my Cuvette FET project 2 - Quizzes. T
 
 ---
 
-## Client Side 
+## Client side
 
 ### Installations 
 
