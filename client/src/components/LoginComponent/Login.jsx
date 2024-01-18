@@ -1,7 +1,8 @@
 import React, { useState, useContext } from 'react'
 
-// Importing formik hook for handling forms 
-import { useFormik } from 'formik'
+// Importing formik hook for handling forms and yup for form validation
+import { Formik, useFormik } from 'formik'
+import * as Yup from 'yup'
 
 // Importing the css module
 import styles from './Login.module.css'
@@ -19,6 +20,24 @@ const Login = () => {
       password: '',
       confirmPassword: '',
     },
+    validationSchema: Yup.object({
+      name: Yup.string()
+        .max(15, "must be less than 15 characters")
+        .required("Name is Required"),
+
+      email: Yup.string()
+        .email("Invalid Email")
+        .required("Email is Required"),
+
+      password: Yup.string()
+        .min(8, "Password must be at least 8 characters")
+        .required("Password is Required"),
+
+      confirmPassword: Yup.string()
+        .oneOf([Yup.ref('password'), null], 'Passwords must match')   // ref the password field and should be the same
+        .required('Re-enter Password here'),
+
+    }),
     onSubmit: (values) => {
       console.log(values);
     }
@@ -30,6 +49,15 @@ const Login = () => {
       email: '',
       password: '',
     },
+    validationSchema: Yup.object({
+      email: Yup.string()
+        .email("Invalid Email")
+        .required("Email is Required"),
+
+      password: Yup.string()
+        .min(8, "Password must be at least 8 characters")
+        .required("Password is Required"),
+    }),
     onSubmit: (values) => {
       console.log(values);
     }
@@ -80,8 +108,10 @@ const Login = () => {
                         id='name'
                         value={registerFormik.values.name}
                         onInput={registerFormik.handleChange}
+                        onBlur={registerFormik.handleBlur}
                       />
                     </td>
+                    {registerFormik.touched.name && registerFormik.errors.name ? <td className={styles.errorLabels}>{registerFormik.errors.name}</td> : null}
                   </tr>
                   <tr className={styles.row}>
                     <td className={styles.col}>
@@ -93,8 +123,10 @@ const Login = () => {
                         id='email'
                         value={registerFormik.values.email}
                         onInput={registerFormik.handleChange}
+                        onBlur={registerFormik.handleBlur}
                       />
                     </td>
+                    {registerFormik.touched.email && registerFormik.errors.email ? <td className={styles.errorLabels}>{registerFormik.errors.email}</td> : null}
                   </tr>
                   <tr className={styles.row}>
                     <td className={styles.col}>
@@ -106,8 +138,10 @@ const Login = () => {
                         id='password'
                         value={registerFormik.values.password}
                         onInput={registerFormik.handleChange}
+                        onBlur={registerFormik.handleBlur}
                       />
                     </td>
+                    {registerFormik.touched.password && registerFormik.errors.password ? <td className={styles.errorLabels}>{registerFormik.errors.password}</td> : null}
                   </tr>
                   <tr className={styles.row}>
                     <td className={styles.col}>
@@ -119,8 +153,10 @@ const Login = () => {
                         id='confirmPassword'
                         value={registerFormik.values.confirmPassword}
                         onInput={registerFormik.handleChange}
+                        onBlur={registerFormik.handleBlur}
                       />
                     </td>
+                    {registerFormik.touched.confirmPassword && registerFormik.errors.confirmPassword ? <td className={styles.errorLabels}>{registerFormik.errors.confirmPassword}</td> : null}
                   </tr>
                   <tr className={styles.submitRow}>
                     <button type="submit" className={styles.submit_btn}>Submit</button>
@@ -148,8 +184,10 @@ const Login = () => {
                         id='email'
                         value={loginFormik.values.email}
                         onInput={loginFormik.handleChange}
+                        onBlur={loginFormik.handleBlur}
                       />
                     </td>
+                    {loginFormik.touched.email && loginFormik.errors.email ? <td className={styles.errorLabels}>{loginFormik.errors.email}</td> : null}
                   </tr>
                   <tr className={styles.row}>
                     <td className={styles.col}>
@@ -161,8 +199,10 @@ const Login = () => {
                         id='password'
                         value={loginFormik.values.password}
                         onInput={loginFormik.handleChange}
+                        onBlur={loginFormik.handleBlur}
                       />
                     </td>
+                    {loginFormik.touched.password && loginFormik.errors.password ? <td className={styles.errorLabels}>{loginFormik.errors.password}</td> : null}
                   </tr>
                   <tr className={styles.submitRow}>
                     <button type="submit" className={styles.submit_btn}>Submit</button>

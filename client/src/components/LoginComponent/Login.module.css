@@ -41,6 +41,17 @@
     align-items: center;
 }
 
+.errorLabels {
+    color: #D60000;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-align: left;
+    width: 300px;
+}
+
 .btn_container {
     display: flex;
     justify-content: space-between;
@@ -71,11 +82,13 @@
     border: none;
     box-shadow: none;
 }
+
 .submitRow {
     display: flex;
     justify-content: center;
     margin-top: 5%;
-  }
+}
+
 .submit_btn {
     width: 274px;
     height: 38px;

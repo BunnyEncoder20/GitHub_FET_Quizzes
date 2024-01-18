@@ -37,8 +37,16 @@ npm i react-router-dom
 ```
 npm i formik
 ```
+4. yup for dead simple form validations 
+```
+npm i yup
+```
+for learning properly about form validation with formik and Yup watch [this](https://youtu.be/vJtyp1YmOpc?si=PwYv_1AoBigVTKkg) video
 
+5. React Toastify for Displaying toasts notifications 
+```
 
+```
 ---
 
 ## Server Side 
