@@ -44,7 +44,6 @@ router.post('/signup', async (req, res) => {
         })
         res.json({
             status: true,
-            user: name,
             msg: `Welcome ${name} to Quizze!`
         })
 

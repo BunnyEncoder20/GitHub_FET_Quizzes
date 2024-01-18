@@ -315,3 +315,21 @@ The Hook
 ```javascript
 import { useSpring, animated } from '@react-spring/web'
 ```
+
+---
+
+### Problems with using JWT package in frontend :
+- instead of using the default JWT package, we should use the jwt-decode package instead : 
+```
+npm i jwt-decode
+```
+- jwt-token usage in a short example :
+```javascript
+import { jwtDecode } from "jwt-decode";
+
+const token = "eyJ0eXAiO.../// jwt token";
+const decoded = jwtDecode(token);
+
+console.log(decoded);
+```
+- these errors when using jwt in frontend mostly because of the nature of jwt which requires some core elements which are not there in non-browser environments.

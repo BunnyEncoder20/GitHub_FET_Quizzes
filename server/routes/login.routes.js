@@ -59,6 +59,7 @@ router.post('/login', async (req, res) => {
         res.json({
             status: true,
             msg: `Welcome back ${user.name} !`,
+            user: user.name,
             token: JWTToken         // to look at the JWT token 
         })
 

@@ -1,5 +1,8 @@
 import React, { useState, useContext } from 'react'
 
+// Importing jwt-decode for decoding the JWT token
+import { jwtDecode } from "jwt-decode";
+
 // Importing formik hook for handling forms and yup for form validation
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -18,6 +21,9 @@ import 'react-toastify/dist/ReactToastify.css';
 // Importing the context 
 import { UserContext } from '../../context/UserContext';
 
+
+
+// Actual Component starting from here
 const Login = () => {
 
   // React Toastify, for registration
@@ -75,6 +81,9 @@ const Login = () => {
       });
     }
   }
+
+  // Importing the user state from Context
+  const { user, setUser } = useContext(UserContext)
 
   // Formik for signup form
   const registerFormik = useFormik({
@@ -155,12 +164,22 @@ const Login = () => {
 
           if (res.data.status) {
             loginNotify(true, res.data)    // calling function for successful login
+
+            setUser({ ...user, token: res.data.token });
           }
           else {
             loginNotify(false, res.data)   // couldn't login
           }
 
-          // feeding information to userContext 
+          
+
+          // suppose you have your token
+          let token = res.data.token;
+          // to decode the token
+          let decoded = jwtDecode(token);
+          console.log('The JWT:\n',decoded);
+
+
         })
         .catch((err) => console.log("[Axios@signup Error] : ", err))
     }
@@ -169,8 +188,7 @@ const Login = () => {
   // making a state for active form 
   const [activeForm, setActiveForm] = useState('login')
 
-  // Importing the user state
-  const { user, setUser } = useContext(UserContext)
+
 
   // Making a request to the server to fetch user information
 
