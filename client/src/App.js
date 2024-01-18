@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { UseContext } from 'react';
 
 // Importing React Router Dom 
 import { BrowserRouter, Routes, Route } from "react-router-dom"
@@ -11,11 +11,11 @@ import './App.css';
 import Login from './components/LoginComponent/Login'
 
 // Importing context providers 
-import { userContextProvider } from './context/userContext'
+import { UserContextProvider } from './context/UserContext'
 
 function App() {
   return (
-    <userContextProvider>
+    <UserContextProvider>
       <div className="App">
 
         <BrowserRouter>
@@ -25,7 +25,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       </div>
-    </userContextProvider>
+    </UserContextProvider>
   );
 }
 

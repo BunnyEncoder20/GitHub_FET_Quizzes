@@ -1,4 +1,129 @@
+/* Importing the fonts */
+@import url('https://fonts.googleapis.com/css2?family=Jomhuria&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+
+.box {
+    background: #F2F2F2;
+}
+
+.rectangle {
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0px 0px 30px #00000026;
+    height: 611px;
+    position: fixed;
+    left: 15%;
+    top: 7%;
+    width: 1066px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .heading {
-    background-color: black;
-    color: aliceblue;
+    font-family: 'Jomhuria', serif;
+    color: #474444;
+    font-size: 100px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-bottom: 3%;
+
+}
+
+.signupForm {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn_container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1%;
+    margin-bottom: 5%;
+    gap: 100px;
+}
+
+.btn {
+    width: 150px;
+    height: 37px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: #FFF;
+    color: #474444;
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.btn.active {
+    box-shadow: 0px 0px 50px 0px rgba(0, 25, 255, 0.75);
+}
+
+.btn.inactive {
+    border: none;
+    box-shadow: none;
+}
+.submitRow {
+    display: flex;
+    justify-content: center;
+    margin-top: 5%;
+  }
+.submit_btn {
+    width: 274px;
+    height: 38px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: #A9BCFF;
+
+    color: #474444;
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+
+}
+
+.inputs {
+    width: 388px;
+    height: 38px;
+    flex-shrink: 0;
+    border-radius: 10px 10px 0px 0px;
+    background: #F4F4F4;
+
+    color: #474444;
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    padding: 1% 1%;
+}
+
+.labels {
+    color: #474444;
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    padding-top: 5%;
+}
+
+td {
+    text-align: right;
+    padding-right: 15px;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 0 1em;
 }

@@ -33,6 +33,11 @@ npm i react-router-dom
 ```
 - for learning exact how to use the react router : Watch this [YTvideo](https://youtu.be/WNU1BEZIjxg?si=WaH3F-b1BL_DvxVV)
 
+3. formik for handling forms 
+```
+npm i formik
+```
+
 
 ---
 
