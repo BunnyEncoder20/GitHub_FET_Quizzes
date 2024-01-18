@@ -72,6 +72,7 @@
     font-style: normal;
     font-weight: 600;
     line-height: normal;
+    border: 1px solid white;
 }
 
 .btn.active {

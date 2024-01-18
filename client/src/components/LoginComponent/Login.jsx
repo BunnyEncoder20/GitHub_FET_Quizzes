@@ -206,12 +206,12 @@ const Login = () => {
 
       <div className={styles.rectangle}>
         <div className={styles.heading}>
-          QUIZZE
+          QUIZZIE
         </div>
 
         <div className={styles.btn_container}>
           <button className={activeForm === 'signup' ? `${styles.btn} ${styles.active}` : `${styles.btn} ${styles.inactive}`} onClick={() => setActiveForm('signup')}>Sign up</button>
-          <button className={activeForm === 'login' ? `${styles.btn} ${styles.active}` : `${styles.btn} ${styles.inactive}`} onClick={() => setActiveForm('login')}>Log in</button>
+          <button className={activeForm === 'login' ? `${styles.btn} ${styles.active}` : `${styles.btn} ${styles.inactive}`} onClick={() => setActiveForm('login')}>Log In</button>
         </div>
 
         {
@@ -281,7 +281,7 @@ const Login = () => {
                     {registerFormik.touched.confirmPassword && registerFormik.errors.confirmPassword ? <td className={styles.errorLabels}>{registerFormik.errors.confirmPassword}</td> : null}
                   </tr>
                   <tr className={styles.submitRow}>
-                    <button type="submit" className={styles.submit_btn}>Submit</button>
+                    <button type="submit" className={styles.submit_btn}>Sign-Up</button>
                   </tr>
                 </tbody>
               </table>
@@ -327,7 +327,7 @@ const Login = () => {
                     {loginFormik.touched.password && loginFormik.errors.password ? <td className={styles.errorLabels}>{loginFormik.errors.password}</td> : null}
                   </tr>
                   <tr className={styles.submitRow}>
-                    <button type="submit" className={styles.submit_btn}>Submit</button>
+                    <button type="submit" className={styles.submit_btn}>Log In</button>
                   </tr>
 
                 </tbody>
