@@ -3,6 +3,7 @@
         "bycrypt",
         "formik",
         "reduxjs",
-        "signup"
+        "signup",
+        "toastify"
     ]
 }

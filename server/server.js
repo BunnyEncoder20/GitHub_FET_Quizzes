@@ -6,7 +6,6 @@ const body_parser = require('body-parser')
 const dotenv = require('dotenv')
 const cors = require('cors')
 
-// Importing routes 
 
 
 // Initialize the express app and bringing in the dotenv variables 
@@ -26,3 +25,10 @@ app.listen(process.env.PORT, () => {
         .then(() => console.log(`[Server] Running at http://localhost:${process.env.PORT}\n[MongoDB] Connected to DB`))
         .catch(err => console.log('[Server] Error occurred while starting the server : \n', err))
 })
+
+
+// Importing routes 
+const signupRoute = require('./routes/signup.routes');
+
+// using routes 
+app.use('/FET', signupRoute);

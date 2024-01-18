@@ -1,18 +1,54 @@
 import React, { useState, useContext } from 'react'
 
 // Importing formik hook for handling forms and yup for form validation
-import { Formik, useFormik } from 'formik'
+import { useFormik } from 'formik'
 import * as Yup from 'yup'
+
+// Importing axios for RESTful API calls 
+import axios from 'axios'
 
 // Importing the css module
 import styles from './Login.module.css'
+
+// Importing react toastify module
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 // Importing the context 
 import { UserContext } from '../../context/UserContext';
 
 const Login = () => {
 
-  // giving formik initial values for register
+  // React Toastify, setting up the toasts 
+  const registerNotify = (success, data) => {
+    if (success) {
+      toast.success(<>✅ User registered Successfully!<br/>👉 {data.msg}</>, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+    else {
+      toast.error(<>☠️ There was an error <br/>👉 {data.msg}</>, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+  }
+
+  // Formik for signup form
   const registerFormik = useFormik({
     initialValues: {
       name: '',
@@ -40,10 +76,31 @@ const Login = () => {
     }),
     onSubmit: (values) => {
       console.log(values);
+
+      axios
+        .post('http://localhost:4000/FET/signup', values)      
+        .then((res) => {
+          console.log("User sent Successfully !")
+
+          // clearing the form (if needed): 
+          // resetForm()
+
+          if (res.data.status) {
+            registerNotify(true, res.data)    // calling function for toastify
+            setActiveForm('login');           // redirecting to login form
+          }
+          else {
+            registerNotify(false, res.data)
+          }
+        }
+        )
+        .catch((err) => console.log("[Axios@signup Error] : ", err))
+
+
     }
   })
 
-  // giving formik initial values
+  // Formik for login form
   const loginFormik = useFormik({
     initialValues: {
       email: '',
@@ -65,9 +122,6 @@ const Login = () => {
 
   // making a state for active form 
   const [activeForm, setActiveForm] = useState('login')
-
-  // making a state for user trying to login
-  // will be handled by formik now
 
   // Importing the user state
   const { user, setUser } = useContext(UserContext)
@@ -218,6 +272,21 @@ const Login = () => {
 
 
       </div>
+
+      {/* Toastify Container added here */}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+        theme="light"
+        icon={false}
+      />
 
     </div>
   );
