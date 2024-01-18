@@ -9,6 +9,8 @@ import './App.css';
 
 // Importing Components
 import Login from './components/LoginComponent/Login'
+import Dashboard from './components/DashboardComponent/Dashboard';
+import PrivateRoutes from './utils/Private.routes'
 
 // Importing context providers 
 import { UserContextProvider } from './context/UserContext'
@@ -21,7 +23,12 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Login />}></Route>
-            <Route path="/main" element={<h1>Dashboard Quiz Page</h1>}></Route>
+
+            {/* Private Routes */}
+            <Route element={<PrivateRoutes />}>
+              <Route path='/dashboard' element={<Dashboard />}  />
+            </Route>
+            
           </Routes>
         </BrowserRouter>
       </div>

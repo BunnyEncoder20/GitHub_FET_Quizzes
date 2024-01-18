@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 // Importing jwt-decode for decoding the JWT token
 import { jwtDecode } from "jwt-decode";
@@ -25,6 +26,9 @@ import { UserContext } from '../../context/UserContext';
 
 // Actual Component starting from here
 const Login = () => {
+
+  // Importing navigate 
+  const navigate = useNavigate();
 
   // React Toastify, for registration
   const registerNotify = (success, data) => {
@@ -153,7 +157,7 @@ const Login = () => {
         .required("Password is Required"),
     }),
 
-    onSubmit: (values, { resetForm } ) => {
+    onSubmit: (values, { resetForm }) => {
       // console.log(values);
 
       axios
@@ -171,16 +175,18 @@ const Login = () => {
             loginNotify(false, res.data)   // couldn't login
           }
 
-          
 
           // suppose you have your token
           let token = res.data.token;
           // to decode the token
           let decoded = jwtDecode(token);
-          console.log('The JWT:\n',decoded);
+          console.log('The JWT:\n', decoded);
 
           // clearing the form 
           resetForm();
+
+          // Navigate to dashboard after successful login
+          navigate('/dashboard');
 
         })
         .catch((err) => console.log("[Axios@signup Error] : ", err))
@@ -189,10 +195,6 @@ const Login = () => {
 
   // making a state for active form 
   const [activeForm, setActiveForm] = useState('login')
-
-
-
-  // Making a request to the server to fetch user information
 
 
   // diagnostics 
