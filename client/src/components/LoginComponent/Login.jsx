@@ -111,7 +111,7 @@ const Login = () => {
         .required('Re-enter Password here'),
 
     }),
-    onSubmit: (values) => {
+    onSubmit: (values, { resetForm }) => {
       // console.log(values);
 
       axios
@@ -120,7 +120,7 @@ const Login = () => {
           console.log("User sent Successfully !")
 
           // clearing the form (if needed): 
-          // resetForm()
+          resetForm();
 
           if (res.data.status) {
             registerNotify(true, res.data)    // calling function for toastify
@@ -153,7 +153,7 @@ const Login = () => {
         .required("Password is Required"),
     }),
 
-    onSubmit: (values) => {
+    onSubmit: (values, { resetForm } ) => {
       // console.log(values);
 
       axios
@@ -179,6 +179,8 @@ const Login = () => {
           let decoded = jwtDecode(token);
           console.log('The JWT:\n',decoded);
 
+          // clearing the form 
+          resetForm();
 
         })
         .catch((err) => console.log("[Axios@signup Error] : ", err))
