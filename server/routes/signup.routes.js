@@ -1,21 +1,20 @@
 // Importing necessary packages 
 const express = require('express')
 const bodyParser = require('body-parser')
-const dotenv = require('dotenv')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 // Importing the userModel
 const userModelRef = require('../models/user.model')
 
-const app = express()
+// Creating a instance of express router
 const router = express.Router()
-dotenv.config()
+
 
 // route for signup 
 router.post('/signup', async (req, res) => {
     try {
-        console.log("[SERVER]:req body received")
+        console.log("[SERVER]:Signup req body received")
         // console.log(req.body)
         const { name, email, password } = req.body;
 
@@ -46,7 +45,7 @@ router.post('/signup', async (req, res) => {
         res.json({
             status: true,
             user: name,
-            msg: `[Mongo] ${name} user added to db`
+            msg: `Welcome ${name} to Quizze!`
         })
 
         console.log("[Mongo] User Added successfully")

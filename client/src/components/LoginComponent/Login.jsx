@@ -20,10 +20,10 @@ import { UserContext } from '../../context/UserContext';
 
 const Login = () => {
 
-  // React Toastify, setting up the toasts 
+  // React Toastify, for registration
   const registerNotify = (success, data) => {
     if (success) {
-      toast.success(<>✅ User registered Successfully!<br/>👉 {data.msg}</>, {
+      toast.success(<>✅ User registered Successfully!<br />🥳 {data.msg}</>, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -35,7 +35,35 @@ const Login = () => {
       });
     }
     else {
-      toast.error(<>☠️ There was an error <br/>👉 {data.msg}</>, {
+      toast.error(<>☠️ There was an error <br />👉 {data.msg}</>, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+  }
+
+  // React Toastify, for login 
+  const loginNotify = (success, data) => {
+    if (success) {
+      toast.success(<>✅ User logged in Successfully!<br />😇 {data.msg}</>, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+    else {
+      toast.error(<>☠️ There was an error <br />👉 {data.msg}</>, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -75,10 +103,10 @@ const Login = () => {
 
     }),
     onSubmit: (values) => {
-      console.log(values);
+      // console.log(values);
 
       axios
-        .post('http://localhost:4000/FET/signup', values)      
+        .post('http://localhost:4000/FET/signup', values)
         .then((res) => {
           console.log("User sent Successfully !")
 
@@ -115,8 +143,26 @@ const Login = () => {
         .min(8, "Password must be at least 8 characters")
         .required("Password is Required"),
     }),
+
     onSubmit: (values) => {
-      console.log(values);
+      // console.log(values);
+
+      axios
+        .post('http://localhost:4000/FET/login', values)
+        .then((res) => {
+          // clearing the form (if needed): 
+          // resetForm()
+
+          if (res.data.status) {
+            loginNotify(true, res.data)    // calling function for successful login
+          }
+          else {
+            loginNotify(false, res.data)   // couldn't login
+          }
+
+          // feeding information to userContext 
+        })
+        .catch((err) => console.log("[Axios@signup Error] : ", err))
     }
   })
 
