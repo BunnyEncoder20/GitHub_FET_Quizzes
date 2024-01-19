@@ -1,0 +1,91 @@
+.mainPage {
+    background: #EDEDED;
+    height: 100vh;
+    display: flex;
+    overflow: hidden;
+}
+
+.navbar {
+    width: 193px;
+    height: 100vh;
+    flex-shrink: 0;
+    background: #FFF;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.75);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 20px;
+}
+
+.navbar h1 {
+    color: #474444;
+    font-family: 'Jomhuria', serif;
+    font-size: 90px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-bottom: 15px;
+    margin-top: 17px;
+
+}
+
+.navbar ul {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+}
+
+.navbar ul li {
+    margin-bottom: 30px;
+}
+
+.btn {
+    margin-top: -70px;
+    margin-bottom: 40px;
+    cursor: pointer;
+
+    color: #474444;
+    border: none;
+    border-radius: 10px;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-transform: uppercase;
+}
+
+.btn.active {
+    box-shadow: 0px 0px 50px 0px rgba(44, 44, 47, 0.75);
+}
+
+.btn.inactive {
+    border: none;
+    box-shadow: none;
+}
+
+.navbar hr {
+    width: 100%;
+    border: 0;
+    border-top: 5px solid #000;
+    /* margin-bottom: -60px; */
+}
+
+.navbar button {
+    width: 100%;
+    margin-top: -70px;
+    margin-bottom: 40px;
+    cursor: pointer;
+
+    color: #474444;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-transform: uppercase;
+}

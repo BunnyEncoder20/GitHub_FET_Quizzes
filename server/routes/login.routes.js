@@ -53,7 +53,7 @@ router.post('/login', async (req, res) => {
         };
 
         // Signing the JWT with the payload  
-        const JWTToken = jwt.sign(jwtPayload, process.env.JWT_PASSWORD, { expiresIn: '2m' })
+        const JWTToken = jwt.sign(jwtPayload, process.env.JWT_PASSWORD, { expiresIn: '1h' })
 
 
         // return the user info : 

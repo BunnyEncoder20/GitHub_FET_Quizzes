@@ -151,7 +151,7 @@ import DefaultExport, { NamedExport } from './file';
 ---
 
 ### Body-parser 
-- it is an important package which is used for reading req.body and the most basic useage can be summarized here : 
+- it is an important package which is used for reading req.body and the most basic usage can be summarized here : 
 ```javascript
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -179,7 +179,7 @@ module.exports = app;
 
 ---
 
-## Context API for state management
+### Context API for state management
 
 - It does functionally the same thing as Redux.
 - It creates a centralized context (Store in redux) where we store our states

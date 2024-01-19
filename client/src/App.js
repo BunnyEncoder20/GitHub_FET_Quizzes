@@ -9,7 +9,7 @@ import './App.css';
 
 // Importing Components
 import Login from './components/LoginComponent/Login'
-import Dashboard from './components/DashboardComponent/Dashboard';
+import MainPage from './components/MainPageComponent/MainPage';
 import PrivateRoutes from './utils/Private.routes'
 
 // Importing context providers 
@@ -22,11 +22,12 @@ function App() {
 
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Login />}></Route>
-
+            <Route path="/" element={<Login />} />
+            {/* For development have made every route unprotected */}
+            <Route path='/mainpage' element={<MainPage />}  />
             {/* Private Routes */}
             <Route element={<PrivateRoutes />}>
-              <Route path='/dashboard' element={<Dashboard />}  />
+              {/* <Route path='/mainpage' element={<MainPage />}  /> */}
             </Route>
             
           </Routes>
