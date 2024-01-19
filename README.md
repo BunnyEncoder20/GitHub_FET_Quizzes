@@ -45,7 +45,12 @@ for learning properly about form validation with formik and Yup watch [this](htt
 
 5. React Toastify for Displaying toasts notifications 
 ```
+npm i react-toastify
+```
 
+6. React Tables to create tables in simple way 
+```
+npm i react-table
 ```
 ---
 
@@ -338,6 +343,7 @@ console.log(decoded);
 
 ### Creating private routes in react-router v6
 
-- the react-router package underwent a lot of changes in it's last update and lot of things and components of it changed. 
-- The the way of crating private routes : [Watch](https://youtu.be/2k8NleFjG7I?si=BZT9r42g0eTdB7fv)
-- 
+- the react-router package underwent a lot of changes in it's last update (v5) and lot of things and components of it changed in the new react-router V6. 
+- The new way of creating private routes : [Watch](https://youtu.be/2k8NleFjG7I?si=BZT9r42g0eTdB7fv)
+
+---

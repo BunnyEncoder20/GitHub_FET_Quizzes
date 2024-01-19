@@ -67,7 +67,7 @@ const Dashboard = () => {
             <div className={styles.heading}>Treading Quizs</div>
             <div className={styles.quizMade}>
                 {/* Replace this with your actual data */}
-                {user.userQuizData.map((_, i) => (
+                {user && user.userQuizData && user.userQuizData.map((_, i) => (
                     <div key={i} className={styles.quizBox}>
                         <div>
                             <span className={styles.quizTitle}>{user.userQuizData[i].title}</span>
