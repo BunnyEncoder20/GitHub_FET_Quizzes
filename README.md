@@ -347,3 +347,19 @@ console.log(decoded);
 - The new way of creating private routes : [Watch](https://youtu.be/2k8NleFjG7I?si=BZT9r42g0eTdB7fv)
 
 ---
+
+### easy function to Copy something into user clipboard (Links / Code)
+
+- for this we use the ClipBoard API provided by browsers 
+```javascript
+// Function to copy the share link of teh Quiz to clipboard 
+  const copyToClipboard = (shareLink) => {
+    navigator.clipboard.writeText(shareLink)
+      .then(() => {
+        console.log('Link copied to clipboard');
+      })
+      .catch(err => {
+        console.error('Could not copy text: ', err);
+      });
+  }
+```

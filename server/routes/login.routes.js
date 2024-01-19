@@ -14,7 +14,7 @@ const router = express.Router()
 // Route for Login
 router.post('/login', async (req, res) => {
     try {
-        console.log("[SERVER]:Login req body received")
+        // console.log("[SERVER]:Login req body received")
         // console.log(req.body)
         const { email, password } = req.body;
         
