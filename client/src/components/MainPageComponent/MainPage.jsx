@@ -35,7 +35,7 @@ const MainPage = () => {
       autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: true,
-      pauseOnHover: false,
+      pauseOnHover: true,
       draggable: false,
       progress: undefined,
       theme: "colored",

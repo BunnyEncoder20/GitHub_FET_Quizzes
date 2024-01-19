@@ -21,7 +21,7 @@ router.post('/login', async (req, res) => {
 
         // Querying the DB to find the specific user
         const user = await userModelRef.findOne({ email: email })
-        console.log('Record found : \n',user)
+        // console.log('Record found : \n',user)
 
 
 
@@ -60,7 +60,6 @@ router.post('/login', async (req, res) => {
         res.json({
             status: true,
             msg: `Welcome back ${user.name} !`,
-            user: user.name,
             token: JWTToken         // to look at the JWT token 
         })
 

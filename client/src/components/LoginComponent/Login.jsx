@@ -38,7 +38,7 @@ const Login = () => {
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
-        pauseOnHover: false,
+        pauseOnHover: true,
         draggable: false,
         progress: undefined,
         theme: "colored",
@@ -66,7 +66,7 @@ const Login = () => {
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
-        pauseOnHover: false,
+        pauseOnHover: true,
         draggable: false,
         progress: undefined,
         theme: "colored",
@@ -169,18 +169,16 @@ const Login = () => {
           if (res.data.status) {
             loginNotify(true, res.data)    // calling function for successful login
 
-            setUser({ ...user, token: res.data.token });
+            setUser({ 
+              ...user, 
+              token: res.data.token,
+              username: jwtDecode(res.data.token).username,
+              userQuizData: jwtDecode(res.data.token).userQuizData
+            });
           }
           else {
             loginNotify(false, res.data)   // couldn't login
           }
-
-
-          // suppose you have your token
-          let token = res.data.token;
-          // to decode the token
-          let decoded = jwtDecode(token);
-          console.log('The JWT:\n', decoded);
 
           // clearing the form 
           resetForm();

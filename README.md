@@ -65,7 +65,7 @@ npm i express ejs body-parser dotenv mongoose bcrypt cors jsonwebtoken
 
 In this section I am putting down ideas and snippets which will help during the project development 
 
-- A basic structure for my database model : 
+- A basic structure for my database model schema: 
 ```javascript
 {
   userName: '',
