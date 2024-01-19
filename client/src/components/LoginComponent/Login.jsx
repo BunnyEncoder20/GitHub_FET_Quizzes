@@ -186,7 +186,7 @@ const Login = () => {
           resetForm();
 
           // Navigate to dashboard after successful login
-          navigate('/dashboard');
+          navigate('/mainpage');
 
         })
         .catch((err) => console.log("[Axios@signup Error] : ", err))

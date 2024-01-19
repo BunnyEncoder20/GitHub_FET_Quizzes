@@ -1,7 +1,10 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 
 // Importing axios for RESTful API calls 
 import axios from 'axios'
+
+// Importing jwt-decode for decoding the JWT token
+import { jwtDecode } from "jwt-decode";
 
 // Importing the css module
 import styles from './MainPage.module.css'
@@ -10,7 +13,8 @@ import styles from './MainPage.module.css'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
+// Importing the context 
+import { UserContext } from '../../context/UserContext';
 
 // Importing Components 
 import Dashboard from './DashboardComponent/Dashboard';
@@ -21,7 +25,30 @@ import CreateQuiz from './CreateQuizComponent/CreateQuiz';
 
 const MainPage = () => {
 
-  
+  // Fetch data from userContext
+  const { user } = useContext(UserContext);
+
+  // Toastify function 
+  const notify = (msg) => {
+    toast.success(<>✅ Log in Successful!<br />😇 {msg}</>, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: "colored",
+    });
+  }
+
+  // for firing toastify messages , I made a useEffect to go off only on the first time loading of this component
+  useEffect(() => {
+    if (user && user.token) {
+      const userInfo = jwtDecode(user.token)
+      notify(`Welcome back ${userInfo.username}`)
+    }
+  }, []);
 
   // making a state for active page 
   const [activePage, setActivePage] = useState('dashboard');
@@ -56,6 +83,23 @@ const MainPage = () => {
           activePage === 'createQuiz' && <CreateQuiz />
         }
       </div>
+
+
+
+      {/* Toastify Container added here */}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+        theme="light"
+        icon={false}
+      />
     </div>
   )
 }

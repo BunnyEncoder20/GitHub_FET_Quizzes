@@ -48,7 +48,7 @@ router.post('/login', async (req, res) => {
 
         // Creating the jwt token
         const jwtPayload = {
-            usernames: user.name,
+            username: user.name,
             userQuizData: user.quizzesMade
         };
 
