@@ -4,6 +4,7 @@ import React, { useState, useEffect, useContext, useRef } from 'react'
 import styles from './MainPage.module.css'
 import crossIcon from '../../assets/cancel.png'
 import plusIcon from '../../assets/plus.png'
+import delIcon from '../../assets/deleteImg.svg'
 
 // Importing react toastify module
 import { ToastContainer, toast } from 'react-toastify';
@@ -142,8 +143,8 @@ const MainPage = () => {
         </dialog>
 
         {/* Main Creating Quiz Modal */}
-        <dialog ref={createDialogRef}>
-          <form method='dialog' className={styles.mainCreateModal}>
+        <dialog ref={createDialogRef} className={styles.mainCreateModal}>
+          <form method='dialog' >
 
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
               <span className={styles.qBtnContainer}>
@@ -156,9 +157,9 @@ const MainPage = () => {
             </div>
 
             <div className={styles.questionTextInput}>
-              <input type="text" className={styles.questionText} name="questionText" id="questionText" placeholder={activeType === 'q&a' ? 'Question Here' : 'Poll Question here'} />
+              <input type="text" className={styles.questionText} name="questionText" id="questionText" placeholder={activeType === 'q&a' ? 'Question Here...' : 'Poll Question here...'} />
             </div>
-            <div>
+            <div className={styles.optionsTypeContainer}>
               <span>Options type</span>
               <label>
                 <input type="radio" name="optionType" id="optionType" value='Text' />
@@ -174,23 +175,48 @@ const MainPage = () => {
               </label>
             </div>
             <div>
-              <div>
-                <input type="text" name="optionText" id="optionText" />
-                <input type="text" name="optionText" id="optionText" />
-                <input type="text" name="optionText" id="optionText" /> <span>Delete Icon</span>
-                <input type="text" name="optionText" id="optionText" /> <span>Delete Icon</span>
-                <button type='button' >Add Option</button>
+              <div className={styles.optionsContainer}>
+                <div className={styles.options}>
+                  <input type="radio" name="correctOption" value="option1" />
+                  <input type="text" name="optionText1" id="optionText1" placeholder='Text' className={styles.optionTextBox} />
+                  <input type="text" name="optionImgURL1" id="optionImgURL1" placeholder='Image URL' className={styles.optionTextBox} />
+                </div>
+
+                <div className={styles.options}>
+                  <input type="radio" name="correctOption" value="option2" />
+                  <input type="text" name="optionText2" id="optionText2" placeholder='Text' className={styles.optionTextBox} />
+                  <input type="text" name="optionImgURL2" id="optionImgURL2" placeholder='Image URL' className={styles.optionTextBox} />
+                </div>
+
+
+                <div className={styles.options}>
+                  <input type="radio" name="correctOption" value="option3" />
+                  <input type="text" name="optionText3" id="optionText3" placeholder='Text' className={styles.optionTextBox} />
+                  <input type="text" name="optionImgURL3" id="optionImgURL3" placeholder='Image URL' className={styles.optionTextBox} />
+                  <span> <img src={delIcon} alt="" className={styles.delIcon} /> </span>
+                </div>
+
+                <div className={styles.options}>
+                  <input type="radio" name="correctOption" value="option4" />
+                  <input type="text" name="optionText4" id="optionText4" placeholder='Text' className={styles.optionTextBox} />
+                  <input type="text" name="optionImgURL4" id="optionImgURL4" placeholder='Image URL' className={styles.optionTextBox} />
+                  <span> <img src={delIcon} alt="" className={styles.delIcon} /> </span>
+                </div>
+
+                <div className={styles.options}>
+                  <button type='button' className={styles.addOption}>Add Option</button>
+                  <div className={styles.timerContainer}>
+                    <button type='button' className={styles.timerTitle}>Timer</button>
+                    <button type='button' className={styles.times} >Off</button>
+                    <button type='button' className={styles.times} >5 sec</button>
+                    <button type='button' className={styles.times} >10 sec</button>
+                  </div>
+                </div>
               </div>
-              <div>
-                <span>Timer</span>
-                <button type='button'>Off</button>
-                <button type='button'>5 seconds</button>
-                <button type='button'>10 seconds</button>
-              </div>
-              <div>
-                <button type='button'>Cancel</button>
-                <button type='Submit'>Create Quiz</button>
-              </div>
+            </div>
+            <div className={styles.createSubmitBtnContainer}>
+              <button type='button' className={styles.createCancel} onClick={()=>{setShowCreateQuizForm(false)}}>Cancel</button>
+              <button type='Submit' className={styles.createSubmit}>Create Quiz</button>
             </div>
           </form>
         </dialog>
