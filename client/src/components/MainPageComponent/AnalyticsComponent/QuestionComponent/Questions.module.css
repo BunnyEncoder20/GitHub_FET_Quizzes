@@ -1,0 +1,94 @@
+.questionsComponent {
+    display: flex;
+    width: 80vw;
+    height: 95vh;
+    padding: 20px;
+
+    align-items: center;
+    flex-direction: column;
+}
+
+.heading {
+    color: #5076FF;
+    font-family: 'Poppins', sans-serif;
+    font-size: 50px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    top: 60px;
+    text-align: left;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.sideHeading {
+    color: #FF5D01;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+.container {
+    width: 80%;
+}
+
+.questionText {
+    width: 828px;
+    height: 36px;
+    flex-shrink: 0;
+
+    color: #000;
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.stats {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.statsBox {
+    width: 245px;
+    height: 89px;
+    flex-shrink: 0;
+    border-radius: 5px;
+    background: #FFF;
+    padding: 5px;
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    margin: 10px;
+    /* half of the gap */
+
+    font-family: 'Poppins', sans-serif;
+    color: #474444;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.BigNum {
+    color: #474444;
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}

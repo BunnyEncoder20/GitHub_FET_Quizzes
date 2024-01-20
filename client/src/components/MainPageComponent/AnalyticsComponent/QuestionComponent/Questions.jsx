@@ -1,0 +1,43 @@
+import React, { useContext } from 'react'
+
+// Importing the styles
+import styles from './Questions.module.css'
+
+import { UserContext } from '../../../../context/UserContext';
+
+
+const Questions = ({ quizId }) => {
+
+    // Importing the Context 
+    const { user } = useContext(UserContext);
+
+    // Finding the specific quiz and loading it's data into the Quiz variable
+    let quiz = user.userQuizData.find(quizData => quizData.quizId === quizId); 
+
+    return (
+        <div className={styles.questionsComponent}>
+            <h1 className={styles.heading}>
+                {quiz.title} - Questions Analysis
+                <div className={styles.sideHeading}>
+                    <span>Created On: {quiz.createdOn}</span>
+                    <span>Impressions: {quiz.impressions}</span>
+                </div>
+            </h1>
+ 
+
+            {user && quiz && quiz.questions.map((question, index) => (
+                <div className={styles.container} key={index}>
+                    <h3 className={styles.questionText}>{question.questionText}</h3>
+                    <div className={styles.stats}>
+                        <div className={styles.statsBox}> <span className={styles.BigNum}>{question.attempts}</span> people Attempted the question</div>
+                        <div className={styles.statsBox}><span className={styles.BigNum}>{question.answeredCorrect}</span> people Answered Correctly</div>
+                        <div className={styles.statsBox}><span className={styles.BigNum}>{question.answeredIncorrect}</span> people Answered Incorrectly</div>
+                    </div>
+                    <hr className={styles.line}/>
+                </div>
+            ))}
+        </div>
+    )
+}
+
+export default Questions
