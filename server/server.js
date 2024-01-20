@@ -30,7 +30,9 @@ app.listen(process.env.PORT, () => {
 // Importing routes 
 const signupRoute = require('./routes/signup.routes');
 const loginRoute = require('./routes/login.routes');
+const deleteQuizRoute = require('./routes/deleteQuiz.routes');
 
 // using routes 
 app.use('/FET', signupRoute);
 app.use('/FET', loginRoute);
+app.use('/FET', deleteQuizRoute);

@@ -169,12 +169,16 @@ const Login = () => {
           if (res.data.status) {
             loginNotify(true, res.data)    // calling function for successful login
 
-            setUser({ 
-              ...user, 
+            setUser({
+              ...user,
               token: res.data.token,
               username: jwtDecode(res.data.token).username,
               userQuizData: jwtDecode(res.data.token).userQuizData
             });
+
+
+            // Navigate to dashboard after successful login
+            navigate('/mainpage');
           }
           else {
             loginNotify(false, res.data)   // couldn't login
@@ -182,9 +186,6 @@ const Login = () => {
 
           // clearing the form 
           resetForm();
-
-          // Navigate to dashboard after successful login
-          navigate('/mainpage');
 
         })
         .catch((err) => console.log("[Axios@signup Error] : ", err))

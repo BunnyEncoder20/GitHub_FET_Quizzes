@@ -45,9 +45,10 @@ router.post('/login', async (req, res) => {
         }
 
 
-
+        // console.log('userId',user._id.toString());
         // Creating the jwt token
         const jwtPayload = {
+            userId: user._id.toString(),
             username: user.name,
             userQuizData: user.quizzesMade
         };

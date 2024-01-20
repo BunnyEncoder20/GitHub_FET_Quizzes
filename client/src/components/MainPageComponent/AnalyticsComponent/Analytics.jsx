@@ -1,4 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useRef, useEffect, useContext } from 'react'
+
+// Importing axios for RESTful API calls 
+import axios from 'axios'
 
 // Importing jwt-decode for decoding the JWT token
 import { jwtDecode } from "jwt-decode";
@@ -13,18 +16,17 @@ import shareImg from '../../../assets/shareImg.svg'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
 // Importing the context 
 import { UserContext } from '../../../context/UserContext';
 
 const Analytics = () => {
 
   // Importing the Context 
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
 
   // Toastify function 
-  const notify = () => {
-    toast.success(<>✅ Link copied to Clipboard </>, {
+  const notify = (msg) => {
+    toast.info(<>{msg}</>, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -41,12 +43,75 @@ const Analytics = () => {
     navigator.clipboard.writeText(shareLink)
       .then(() => {
         console.log('Link copied to clipboard');
-        notify();
+        notify('✅ Link copied to Clipboard');
       })
       .catch(err => {
         console.error('Could not copy text: ', err);
       });
   }
+
+  // Getting the ref for the dialog element here 
+  const dialogRef = useRef();
+  // State to open and close delPopup
+  const [isOpen, setIsOpen] = useState({
+    state: false,
+    quiz: null,
+  });
+
+  // function to open and close delPopup by changing isOpen state
+  const toggleDialog = (quizId) => {
+    setIsOpen({
+      state: !isOpen.state,
+      quiz: quizId
+    });
+  };
+
+  // Creating a useEffect to listen for changes to isOpen state
+  useEffect(() => {
+    if (isOpen.state) {
+      dialogRef.current.showModal(); // method for opening Dialog tag Modal
+    }
+    else {
+      dialogRef.current.close();     // method for closing Dialog tag Modal
+    }
+  }, [isOpen]);
+
+  // Creating a useEffect to listen for changes to userContext
+  useEffect(() => {
+    console.log('User after update:', user);
+  }, [user]);
+
+  // Function to delete quiz from db
+  const delQuiz = async () => {
+    try {
+      // replace 'quizId' with the id of the quiz you want to delete
+      console.log('sending delete request now...');
+      const response = await axios.delete(`http://localhost:4000/FET/deleteQuiz/${jwtDecode(user.token).userId}/${isOpen.quiz}`);
+      console.log("FrontEnd response : ", response);
+
+      if (response.status === 200) {
+        // update user context after successful deletion
+        console.log(response.data.message);
+        console.log('User before update:', user);
+        const updatedUser = { ...user, userQuizData: user.userQuizData.filter(quiz => quiz.quizId !== isOpen.quiz) };
+        await setUser(updatedUser);
+
+
+
+
+
+        // notify('✅ Deleted Quiz');   // causing a double render of the toastify message and causing app to crash when placed inside this delQuiz function
+      } else {
+        console.error('Failed to delete quiz');
+        notify('☠️ Failed to Delete the quiz <br/>Server sent back status 500');
+      }
+      toggleDialog(''); // closing the delPopup
+
+    }
+    catch (error) {
+      notify(<>☠️ Error while Sending deleting Request to DB<br />error</>);
+    }
+  };
 
   return (
     <div className={styles.analytics}>
@@ -65,15 +130,15 @@ const Analytics = () => {
         </div>
         {user && user.userQuizData && user.userQuizData.map((_, index) => (
           <div className={index % 2 === 0 ? `${styles.tableRow} ${styles.mainRow}` : `${styles.tableRow} ${styles.alternateRow}`}>
-            <span>{index+1}</span>
+            <span>{index + 1}</span>
             <span>{user.userQuizData[index].title}</span>
             <span>{user.userQuizData[index].createdOn}</span>
             <span>{user.userQuizData[index].impressions}</span>
             <span>
-              <button className={styles.editBtn}> <img src={editImg} /> </button>
-              <button className={styles.deleteBtn}> <img src={deleteImg} /> </button>
+              <button className={styles.editBtn}> <img src={editImg} alt='edit' /> </button>
+              <button className={styles.deleteBtn} onClick={() => toggleDialog(user.userQuizData[index].quizId)}> <img src={deleteImg} alt='del' /> </button>
               <button className={styles.shareBtn} onClick={() => copyToClipboard(user.userQuizData[index].shareLink)}>
-                <img src={shareImg} />
+                <img src={shareImg} alt='share' />
               </button>
             </span>
             <span>
@@ -82,6 +147,14 @@ const Analytics = () => {
           </div>
         ))}
       </div>
+
+      {/* Dialog element for the delete popup */}
+      <dialog className={styles.delPopup} ref={dialogRef}>
+        <div>Are you confirm you want to delete ?</div>
+        <span><button className={styles.confirmBtn} onClick={() => delQuiz()}>Confirm Delete</button></span>
+        <span><button onClick={() => toggleDialog('')}>Cancel</button></span>
+      </dialog>
+
 
       {/* Toastify Container added here */}
       <ToastContainer

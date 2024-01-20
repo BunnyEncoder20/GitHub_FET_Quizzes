@@ -1,11 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
 
-// Importing axios for RESTful API calls 
-import axios from 'axios'
-
-// Importing jwt-decode for decoding the JWT token
-import { jwtDecode } from "jwt-decode";
-
 // Importing the css module
 import styles from './MainPage.module.css'
 
@@ -45,8 +39,8 @@ const MainPage = () => {
   // for firing toastify messages , I made a useEffect to go off only on the first time loading of this component
   useEffect(() => {
     if (user && user.token) {
-      const userInfo = jwtDecode(user.token)
-      notify(`Welcome back ${userInfo.username}`)
+      notify(`Welcome back ${user.username}`)
+      // console.log(user);
     }
   }, []);
 
