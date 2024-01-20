@@ -33,7 +33,7 @@ const Questions = ({ quizId }) => {
                         <div className={styles.statsBox}><span className={styles.BigNum}>{question.answeredCorrect}</span> people Answered Correctly</div>
                         <div className={styles.statsBox}><span className={styles.BigNum}>{question.answeredIncorrect}</span> people Answered Incorrectly</div>
                     </div>
-                    <hr className={styles.line}/>
+                    <hr/>
                 </div>
             ))}
         </div>
