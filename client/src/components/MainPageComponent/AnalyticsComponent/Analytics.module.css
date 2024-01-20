@@ -20,6 +20,13 @@
     margin-bottom: 40px;
 }
 
+.rowContainer {
+    max-height: 550px;
+    /* Set a fixed height for the container */
+    overflow-y: auto;
+    /* Enable vertical scrolling when necessary */
+}
+
 .tableRow,
 .tableHeader {
     display: grid;
@@ -31,7 +38,7 @@
 
 .tableRow {
     width: 105 0px;
-    height: 35px;
+    height: 40px;
     flex-shrink: 0;
     border-radius: 10px;
 
@@ -107,6 +114,11 @@
     font-style: normal;
     font-weight: 600;
     line-height: normal;
+
+}
+
+::backdrop {
+    background-color: rgba(0, 0, 0, 0.81);
 }
 
 .delPopup button {

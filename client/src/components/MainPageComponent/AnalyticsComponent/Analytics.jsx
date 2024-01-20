@@ -119,33 +119,36 @@ const Analytics = () => {
       <div className={styles.heading}>Quiz Analysis</div>
 
       {/* Tables */}
+
       <div className={styles.table}>
         <div className={styles.tableRow + ' ' + styles.tableHeader}>
           <span>S no.</span>
           <span>Quiz Name</span>
           <span>Created On</span>
           <span>Impressions</span>
-          <span>Actions</span>
-          <span>Share Link</span>
+          <span style={{ color: '#5076FF' }}>Actions</span>
+          <span style={{ color: '#5076FF' }}>Question Wise Analysis</span>
         </div>
-        {user && user.userQuizData && user.userQuizData.map((_, index) => (
-          <div className={index % 2 === 0 ? `${styles.tableRow} ${styles.mainRow}` : `${styles.tableRow} ${styles.alternateRow}`}>
-            <span>{index + 1}</span>
-            <span>{user.userQuizData[index].title}</span>
-            <span>{user.userQuizData[index].createdOn}</span>
-            <span>{user.userQuizData[index].impressions}</span>
-            <span>
-              <button className={styles.editBtn}> <img src={editImg} alt='edit' /> </button>
-              <button className={styles.deleteBtn} onClick={() => toggleDialog(user.userQuizData[index].quizId)}> <img src={deleteImg} alt='del' /> </button>
-              <button className={styles.shareBtn} onClick={() => copyToClipboard(user.userQuizData[index].shareLink)}>
-                <img src={shareImg} alt='share' />
-              </button>
-            </span>
-            <span>
-              <button className={styles.questionWiseAnalysis}>Question Wise Analysis</button>
-            </span>
-          </div>
-        ))}
+        <div className={styles.rowContainer}>
+          {user && user.userQuizData && user.userQuizData.map((_, index) => (
+            <div className={index % 2 === 0 ? `${styles.tableRow} ${styles.mainRow}` : `${styles.tableRow} ${styles.alternateRow}`}>
+              <span>{index + 1}</span>
+              <span>{user.userQuizData[index].title}</span>
+              <span>{user.userQuizData[index].createdOn}</span>
+              <span>{user.userQuizData[index].impressions}</span>
+              <span>
+                <button className={styles.editBtn}> <img src={editImg} alt='edit' /> </button>
+                <button className={styles.deleteBtn} onClick={() => toggleDialog(user.userQuizData[index].quizId)}> <img src={deleteImg} alt='del' /> </button>
+                <button className={styles.shareBtn} onClick={() => copyToClipboard(user.userQuizData[index].shareLink)}>
+                  <img src={shareImg} alt='share' />
+                </button>
+              </span>
+              <span>
+                <button className={styles.questionWiseAnalysis}>Question Wise Analysis</button>
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Dialog element for the delete popup */}
