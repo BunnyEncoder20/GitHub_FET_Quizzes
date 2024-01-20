@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext, useRef } from 'react'
 
 // Importing the css module
 import styles from './MainPage.module.css'
@@ -13,7 +13,7 @@ import { UserContext } from '../../context/UserContext';
 // Importing Components 
 import Dashboard from './DashboardComponent/Dashboard';
 import Analytics from './AnalyticsComponent/Analytics';
-import CreateQuiz from './CreateQuizComponent/CreateQuiz';
+
 
 
 
@@ -47,6 +47,31 @@ const MainPage = () => {
   // making a state for active page 
   const [activePage, setActivePage] = useState('dashboard');
 
+  // State to apply active class to buttons (inside create Quiz modal )
+  const [activeType, setActiveType] = useState('q&a');
+
+  // Function to handle first lvl modal form submission
+  const handleFirstSubmit = (e) => {
+    const formInputs = new FormData(e.target)
+    const payload = Object.fromEntries(formInputs);
+    console.log(payload.title);
+    console.log(activeType);
+  }
+
+  // making a state for showing Create Modal
+  const [showModal, setShowModal] = useState(false);
+
+  // UseEffect for opening and closing the model using the html in-built functions
+  const dialogRef = useRef();
+  useEffect(() => {
+    if (showModal) {
+      dialogRef.current.showModal(); // method for opening Dialog tag Modal
+    }
+    else {
+      dialogRef.current.close();     // method for closing Dialog tag Modal
+    }
+  }, [showModal]);
+
   return (
     <div className={styles.mainPage}>
       {/* Side Nav bar */}
@@ -55,7 +80,7 @@ const MainPage = () => {
         <ul>
           <li><button className={activePage === 'dashboard' ? `${styles.btn} ${styles.active}` : `${styles.btn} ${styles.inactive}`} onClick={() => setActivePage('dashboard')}>Dashboard</button></li>
           <li><button className={activePage === 'analytics' ? `${styles.btn} ${styles.active}` : `${styles.btn} ${styles.inactive}`} onClick={() => setActivePage('analytics')}>Analytics</button></li>
-          <li><button className={activePage === 'createQuiz' ? `${styles.btn} ${styles.active}` : `${styles.btn} ${styles.inactive}`} onClick={() => setActivePage('createQuiz')}>Create Quiz</button></li>
+          <li><button className={`${styles.btn} ${styles.inactive}`} onClick={() => setShowModal(true)}>Create Quiz</button></li>
         </ul>
         <hr />
         <button>Logout</button>
@@ -72,10 +97,28 @@ const MainPage = () => {
           activePage === 'analytics' && <Analytics />
         }
 
-        {/* CreateQuiz Component */}
-        {
-          activePage === 'createQuiz' && <CreateQuiz />
-        }
+        {/* CreateQuiz Modal */}
+
+        <dialog className={styles.createContainer} ref={dialogRef}>
+          <form onSubmit={handleFirstSubmit} method='dialog' className={styles.formLayout}>
+
+            <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+              <input type="text" name="title" id="title" className={styles.title} placeholder='Quiz Name' />
+            </div>
+            <div className={styles.btnContainer}>
+              <span className={styles.type}>Quiz Type: </span>
+              <button className={activeType === 'q&a' ? `${styles.btn} ${styles.createActive}` : `${styles.btn}`} type="button" onClick={() => setActiveType('q&a')}>Q & A</button>
+              <button className={activeType === 'poll' ? `${styles.btn} ${styles.createActive}` : `${styles.btn}`} type="button" onClick={() => setActiveType('poll')}>Poll</button>
+            </div>
+            <div className={styles.btnContainer}>
+              {/* add later : onClick={()=>setShowModal(false)} */}
+              <span><button className={styles.submissionBtn} onClick={()=>setShowModal(false)}>Cancel</button></span>
+              <span><button type='submit' className={`${styles.submissionBtn} ${styles.createActive}`} onClick={()=>setShowModal(false)}>Continue</button></span>
+            </div>
+          </form>
+        </dialog>
+
+
       </div>
 
 
