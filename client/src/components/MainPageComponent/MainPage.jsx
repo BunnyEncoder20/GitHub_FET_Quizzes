@@ -94,7 +94,7 @@ const MainPage = () => {
       impressions: 0,
       shareLink: `http://localhost:400/quizTime/${jwtDecode(user.token).userId}/${generatedQuizId}`,
       title: title,
-      createdOn: dateObject.getDate() + monthNames[dateObject.getMonth()] + ', ' + dateObject.getFullYear(),
+      createdOn: dateObject.getDate() + ' ' + monthNames[dateObject.getMonth()] + ', ' + dateObject.getFullYear(),
       quizType: activeType,
       questions: questionsArray
     }
