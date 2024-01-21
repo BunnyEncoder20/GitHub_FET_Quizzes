@@ -117,7 +117,7 @@ const MainPage = () => {
           oid: 1,
           optionText: '',
           optionImg: '',
-          isCorrect: true
+          isCorrect: false
         },
         {
           oid: 2,
@@ -206,14 +206,14 @@ const MainPage = () => {
   const handleOptionChange = (textValue = '', imgValue = '', isCorrect, qid, oid) => {
     const questionIndex = questionsArray.findIndex(question => question.qid === qid);
     const optionIndex = questionsArray[questionIndex].options.findIndex(option => option.oid === oid);
-    
+
 
     // Creating a new questionArray with new values for option
     const newQuestionsArray = [...questionsArray];
 
-    if(isCorrect){
-      newQuestionsArray[questionIndex].options.forEach((option)=>{
-        if(option.oid === oid)
+    if (isCorrect) {
+      newQuestionsArray[questionIndex].options.forEach((option) => {
+        if (option.oid === oid)
           option.isCorrect = true;
         else
           option.isCorrect = false;
@@ -317,16 +317,19 @@ const MainPage = () => {
                   <button key={question.qid} type='button' className={styles.qBtn}>Q{index + 1} {question.qid !== 0 && <img src={crossIcon} className={styles.cross} alt='' onClick={() => removeQuestion(question.qid)} />} </button>
                 ))}
                 <span>
-                  <img src={plusIcon} className={styles.plus} alt='' onClick={() => {
-                    if (questionsArray.length !== 5)
-                      handleAddQuestion()
-                  }} />
+                  <img src={plusIcon}
+                    alt=''
+                    className={ questionsArray.length === 5 ? `${styles.noShow}` : `${styles.plus}`}
+                    onClick={() => {
+                      if (questionsArray.length !== 5)
+                        handleAddQuestion()
+                    }} />
                 </span>
               </span>
               <span className={styles.limit}>Max 5 Questions</span>
             </div>
             <div className={styles.mappedInputs} >
-              {questionsArray.map((question,index) => {
+              {questionsArray.map((question, index) => {
                 return (
                   <div key={question.qid}>
                     <div className={styles.questionTextInput}>
@@ -352,20 +355,23 @@ const MainPage = () => {
                         {question.options.map((option) => {
                           return (
                             <div className={styles.options} key={option.oid}>
-                              <input type="radio" name="correctOption" onClick={() => handleOptionChange(option.optionText, option.optionImg, true, question.qid, option.oid)} />
+                              <input type="radio" name="correctOption"
+                                className={activeType === 'poll' ? `${styles.noShow}` : ``}
+                                onClick={() => handleOptionChange(option.optionText, option.optionImg, true, question.qid, option.oid)}
+                              />
 
                               {question.optionsType === 'text' || question.optionsType === 'text&ImgURL' ? (
                                 <input type="text" name="optionText" id="optionText"
                                   placeholder='Text'
                                   onChange={(e) => handleOptionChange(e.target.value, option.optionImg, option.isCorrect, question.qid, option.oid)}
-                                  className={ option.isCorrect ? `${styles.optionTextBox} ${styles.activeOptionTextBox}` : `${styles.optionTextBox}`} />
+                                  className={option.isCorrect ? `${styles.optionTextBox} ${styles.activeOptionTextBox}` : `${styles.optionTextBox}`} />
                               ) : null}
 
                               {question.optionsType === 'text&ImgURL' || question.optionsType === 'ImgURL' ? (
                                 <input type="text" name="optionImgURL3" id="optionImgURL3"
                                   placeholder='Image URL'
                                   onChange={(e) => handleOptionChange(option.optionText, e.target.value, option.isCorrect, question.qid, option.oid)}
-                                  className={ option.isCorrect ? `${styles.optionTextBox} ${styles.activeOptionTextBox}` : `${styles.optionTextBox}`} />
+                                  className={option.isCorrect ? `${styles.optionTextBox} ${styles.activeOptionTextBox}` : `${styles.optionTextBox}`} />
                               ) : null}
 
                               {option.oid > 2 && <span> <img src={delIcon} alt="" className={styles.delIcon} onClick={() => removeOption(question.qid, option.oid)} /> </span>}
@@ -374,19 +380,19 @@ const MainPage = () => {
                         })}
 
                         <div className={styles.options}>
-                          <button type='button' 
-                          className={ question.options.length === 4 ? `${styles.noShow}` : `${styles.addOption}`} 
-                          onClick={() => {
-                            if (question.options.length < 4)
-                              addOption(question.qid)
-                          }}>
+                          <button type='button'
+                            className={question.options.length === 4 ? `${styles.noShow}` : `${styles.addOption}`}
+                            onClick={() => {
+                              if (question.options.length < 4)
+                                addOption(question.qid)
+                            }}>
                             Add Option
                           </button>
-                          <div className={styles.timerContainer}>
+                          <div className={activeType === 'poll' ? `${styles.noShow}` : `${styles.timerContainer}`}>
                             <button type='button' className={styles.timerTitle}>Timer</button>
-                            <button type='button' className={ Number(question.isTimed) === 0 ? `${styles.times} ${styles.activeTimes}` : `${styles.times}`} value='0' onClick={(e) => handleQuestionsChange(e.target.value, question.qid, 'isTimed')}>Off</button>
-                            <button type='button' className={ Number(question.isTimed) === 5 ? `${styles.times} ${styles.activeTimes}` : `${styles.times}`} value='5' onClick={(e) => handleQuestionsChange(e.target.value, question.qid, 'isTimed')}>5 sec</button>
-                            <button type='button' className={ Number(question.isTimed) === 10 ? `${styles.times} ${styles.activeTimes}` : `${styles.times}`} value='10' onClick={(e) => handleQuestionsChange(e.target.value, question.qid, 'isTimed')}>10 sec</button>
+                            <button type='button' className={Number(question.isTimed) === 0 ? `${styles.times} ${styles.activeTimes}` : `${styles.times}`} value='0' onClick={(e) => handleQuestionsChange(e.target.value, question.qid, 'isTimed')}>Off</button>
+                            <button type='button' className={Number(question.isTimed) === 5 ? `${styles.times} ${styles.activeTimes}` : `${styles.times}`} value='5' onClick={(e) => handleQuestionsChange(e.target.value, question.qid, 'isTimed')}>5 sec</button>
+                            <button type='button' className={Number(question.isTimed) === 10 ? `${styles.times} ${styles.activeTimes}` : `${styles.times}`} value='10' onClick={(e) => handleQuestionsChange(e.target.value, question.qid, 'isTimed')}>10 sec</button>
                           </div>
                         </div>
                       </div>
