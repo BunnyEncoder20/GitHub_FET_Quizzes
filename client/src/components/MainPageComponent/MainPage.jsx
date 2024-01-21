@@ -79,19 +79,19 @@ const MainPage = () => {
 
   // making a state array for adding/removing Questions & array for Options
   const [questionsArray, setQuestionsArray] = useState([{
-    qid: 1,
+    qid: 0,
     questionText: '',
-    optionsType: '',
-    isTimed: '',
+    optionsType: 'text',
+    isTimed: 0,
     options: [
       {
-        oid: 1,
+        oid: 0,
         optionText: '',
         optionImg: '',
-        isCorrect: true
+        isCorrect: false
       },
       {
-        oid: 2,
+        oid: 1,
         optionText: '',
         optionImg: '',
         isCorrect: false
@@ -102,13 +102,17 @@ const MainPage = () => {
     answeredIncorrect: 0
   }]);
 
+  // declaring constants for generating unique ids for questions and options
+  const qMin = 10000, qMax = 100000
+  const oMin = 1000, oMax = 10000
+
   // function for handling adding questions & one for adding options
   const handleAddQuestion = () => {
     const newQuestionsArray = [...questionsArray, {
-      qid: questionsArray.length + 1,
+      qid: Math.floor(Math.random() * (qMax - qMin) + qMin),
       questionText: '',
-      optionsType: '',
-      isTimed: '',
+      optionsType: 'text',
+      isTimed: 0,
       options: [
         {
           oid: 1,
@@ -140,7 +144,7 @@ const MainPage = () => {
 
     // add the new option
     const newOptionsArray = [...optionsArray, {
-      oid: optionsArray.length + 1,
+      oid: Math.floor(Math.random() * (oMax - oMin) + oMin),
       optionText: '',
       optionImg: '',
       isCorrect: false
@@ -165,6 +169,8 @@ const MainPage = () => {
 
     // Remove the correct option
     const newOptionsArray = questionsArray[questionIndex].options.filter(option => option.oid !== oid);
+    console.log('qid: ', qid)
+    console.log('oid: ', oid)
 
     // Create a new questions array with the updated options
     const newQuestionsArray = [...questionsArray];
@@ -175,15 +181,20 @@ const MainPage = () => {
   };
 
   // function for handling onChange in Questions & a function for handling options onChange
-  const handleQuestionsChange = (value, index, inputType) => {
+  const handleQuestionsChange = (value, qid, inputType) => {
     const inputData = [...questionsArray];
+    const questionIndex = inputData.findIndex(question => question.qid === qid);
     switch (inputType) {
       case 'questionText':
-        inputData[index].questionText = value;
+        inputData[questionIndex].questionText = value;
+        break;
+
+      case 'optionType':
+        inputData[questionIndex].optionsType = value;
         break;
 
       case 'isTimed':
-        inputData[index].isTimed = value;
+        inputData[questionIndex].isTimed = value;
         break;
 
       default:
@@ -193,13 +204,26 @@ const MainPage = () => {
     setQuestionsArray(inputData);
   }
 
-  const handleOptionChange = (value, qid, oid) => {
+  const handleOptionChange = (textValue = '', imgValue = '', isCorrect, qid, oid) => {
     const questionIndex = questionsArray.findIndex(question => question.qid === qid);
     const optionIndex = questionsArray[questionIndex].options.findIndex(option => option.oid === oid);
 
     // Creating a new questionArray with new values for option
     const newQuestionsArray = [...questionsArray];
-    newQuestionsArray[questionIndex].options[optionIndex].optionText = value;
+    if (questionsArray[questionIndex].optionsType === 'text&ImgURL') {
+      newQuestionsArray[questionIndex].options[optionIndex].optionText = textValue;
+      newQuestionsArray[questionIndex].options[optionIndex].isCorrect = isCorrect;
+      newQuestionsArray[questionIndex].options[optionIndex].optionImg = imgValue;
+    }
+    if (questionsArray[questionIndex].optionsType === 'text') {
+      newQuestionsArray[questionIndex].options[optionIndex].optionText = textValue;
+      newQuestionsArray[questionIndex].options[optionIndex].isCorrect = isCorrect;
+    }
+    if (questionsArray[questionIndex].optionsType === 'ImgURL') {
+      newQuestionsArray[questionIndex].options[optionIndex].optionImg = imgValue;
+      newQuestionsArray[questionIndex].options[optionIndex].isCorrect = isCorrect;
+    }
+
 
     // updating the questionArray
     setQuestionsArray(newQuestionsArray);
@@ -284,7 +308,7 @@ const MainPage = () => {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
               <span className={styles.qBtnContainer}>
                 {questionsArray.map((question, index) => (
-                  <button key={index} type='button' className={styles.qBtn}>Q{question.qid} {question.qid !== 1 && <img src={crossIcon} className={styles.cross} alt='' onClick={() => removeQuestion(question.qid)} />} </button>
+                  <button key={question.qid} type='button' className={styles.qBtn}>Q{index + 1} {question.qid !== 1 && <img src={crossIcon} className={styles.cross} alt='' onClick={() => removeQuestion(question.qid)} />} </button>
                 ))}
                 <span>
                   <img src={plusIcon} className={styles.plus} alt='' onClick={() => {
@@ -295,62 +319,75 @@ const MainPage = () => {
               </span>
               <span className={styles.limit}>Max 5 Questions</span>
             </div>
+            <div className={styles.mappedInputs} >
+              {questionsArray.map((question) => {
+                return (
+                  <div key={question.qid}>
+                    <div className={styles.questionTextInput}>
+                      <input type="text" onChange={(e) => handleQuestionsChange(e.target.value, question.qid, 'questionText')} className={styles.questionText} name="questionText" id="questionText" placeholder={activeType === 'q&a' ? 'Question Here...' : 'Poll Question here...'} />
+                    </div>
+                    <div className={styles.optionsTypeContainer}>
+                      <span>Options type</span>
+                      <label>
+                        <input type="radio" name="optionType" id="optionType" value='text' onClick={(e) => handleQuestionsChange(e.target.value, question.qid, 'optionType')} />
+                        Text
+                      </label>
+                      <label>
+                        <input type="radio" name="optionType" id="optionType" value='ImgURL' onClick={(e) => handleQuestionsChange(e.target.value, question.qid, 'optionType')} />
+                        ImgURL
+                      </label>
+                      <label>
+                        <input type="radio" name="optionType" id="optionType" value='text&ImgURL' onClick={(e) => handleQuestionsChange(e.target.value, question.qid, 'optionType')} />
+                        Text & ImgURL
+                      </label>
+                    </div>
+                    <div>
+                      <div className={styles.optionsContainer}>
+                        {question.options.map((option) => {
+                          return (
+                            <div className={styles.options} key={option.oid}>
+                              <input type="radio" name="correctOption" onClick={() => handleOptionChange(option.optionText, option.optionImg, true, question.qid, option.oid)} />
 
-            {questionsArray.map((question, index) => {
-              return (
-                <>
-                  <div className={styles.questionTextInput}>
-                    <input type="text" onChange={(e) => handleQuestionsChange(e.target.value, index, 'questionText')} className={styles.questionText} name="questionText" id="questionText" placeholder={activeType === 'q&a' ? 'Question Here...' : 'Poll Question here...'} />
-                  </div>
-                  <div className={styles.optionsTypeContainer}>
-                    <span>Options type</span>
-                    <label>
-                      <input type="radio" name="optionType" id="optionType" value='Text' onChange={(e) => handleQuestionsChange(e.target.value, index, 'optionType')} />
-                      Text
-                    </label>
-                    <label>
-                      <input type="radio" name="optionType" id="optionType" value='ImgURL' onChange={(e) => handleQuestionsChange(e.target.value, index, 'optionType')} />
-                      ImgURL
-                    </label>
-                    <label>
-                      <input type="radio" name="optionType" id="optionType" value='Text&Img' onChange={(e) => handleQuestionsChange(e.target.value, index, 'optionType')} />
-                      Text & ImgURL
-                    </label>
-                  </div>
-                  <div>
-                    <div className={styles.optionsContainer}>
-                      {question.options.map((option, index) => {
-                        return (
-                          <div className={styles.options} key={index}>
-                            <input type="radio" name="correctOption" value={option.oid} />
-                            <input type="text" name="optionText3" id="optionText3" placeholder='Text' className={styles.optionTextBox} />
-                            <input type="text" name="optionImgURL3" id="optionImgURL3" placeholder='Image URL' className={styles.optionTextBox} />
-                            {option.oid > 2 && <span> <img src={delIcon} alt="" className={styles.delIcon} onClick={() => removeOption(question.qid, option.oid)} /> </span>}
+                              {question.optionsType === 'text' || question.optionsType === 'text&ImgURL' ? (
+                                <input type="text" name="optionText3" id="optionText3"
+                                  placeholder='Text'
+                                  onChange={(e) => handleOptionChange(e.target.value, option.optionImg, option.isCorrect, question.qid, option.oid)}
+                                  className={styles.optionTextBox} />
+                              ) : null}
+
+                              {question.optionsType === 'text&ImgURL' || question.optionsType === 'ImgURL' ? (
+                                <input type="text" name="optionImgURL3" id="optionImgURL3"
+                                  placeholder='Image URL'
+                                  onChange={(e) => handleOptionChange(option.optionText, e.target.value, option.isCorrect, question.qid, option.oid)}
+                                  className={styles.optionTextBox} />
+                              ) : null}
+
+                              {option.oid > 2 && <span> <img src={delIcon} alt="" className={styles.delIcon} onClick={() => removeOption(question.qid, option.oid)} /> </span>}
+                            </div>
+                          )
+                        })}
+
+                        <div className={styles.options}>
+                          <button type='button' className={styles.addOption} onClick={() => {
+                            if (question.options.length < 4)
+                              addOption(question.qid)
+                          }}>
+                            Add Option
+                          </button>
+                          <div className={styles.timerContainer}>
+                            <button type='button' className={styles.timerTitle}>Timer</button>
+                            <button type='button' className={styles.times} value='0' onClick={(e) => handleQuestionsChange(e.target.value, question.qid, 'isTimed')}>Off</button>
+                            <button type='button' className={styles.times} value='5' onClick={(e) => handleQuestionsChange(e.target.value, question.qid, 'isTimed')}>5 sec</button>
+                            <button type='button' className={styles.times} value='10' onClick={(e) => handleQuestionsChange(e.target.value, question.qid, 'isTimed')}>10 sec</button>
                           </div>
-                        )
-                      })}
-
-                      <div className={styles.options}>
-                        <button type='button' className={styles.addOption} onClick={() => {
-                          if (question.options.length < 4)
-                            addOption(question.qid)
-                        }}>
-                          Add Option
-                        </button>
-                        <div className={styles.timerContainer}>
-                          <button type='button' className={styles.timerTitle}>Timer</button>
-                          <button type='button' className={styles.times} value='0' onClick={(e) => handleQuestionsChange(e.target.value, index, 'isTimed')}>Off</button>
-                          <button type='button' className={styles.times} value='5' onClick={(e) => handleQuestionsChange(e.target.value, index, 'isTimed')}>5 sec</button>
-                          <button type='button' className={styles.times} value='10' onClick={(e) => handleQuestionsChange(e.target.value, index, 'isTimed')}>10 sec</button>
                         </div>
                       </div>
                     </div>
+
                   </div>
-
-                </>
-              )
-            })}
-
+                )
+              })}
+            </div>
             <div className={styles.createSubmitBtnContainer}>
               <button type='button' className={styles.createCancel} onClick={() => { setShowCreateQuizForm(false) }}>Cancel</button>
               <button type='Submit' className={styles.createSubmit} onClick={() => { setShowCreateQuizForm(false) }}>Create Quiz</button>
