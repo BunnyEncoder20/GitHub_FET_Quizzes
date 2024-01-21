@@ -3,9 +3,9 @@
     height: 100vh;
     display: flex;
     overflow: hidden;
-    
+
     accent-color: #60B84B;
-    
+
 }
 
 .navbar {
@@ -479,6 +479,68 @@
 
     color: #FFF;
     font-family: 'Poppins', sans-serif;
+    font-size: 21px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    cursor: pointer;
+}
+
+.shareModal {
+    width: 845px;
+    height: 360px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: #FFF;
+    filter: drop-shadow(0px 0px 10px rgba(255, 255, 255, 0.5));
+    padding: 20px;
+}
+
+.shareContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.shareHeading {
+    color: #474444;
+    text-align: center;
+    font-family: Poppins;
+    font-size: 39px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.shareLinkInput {
+    width: 675px;
+    height: 60px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: #EDEDED;
+    padding: 0px 10px;
+    margin: 40px 0px;
+    text-align: center;
+
+    color: #474444;
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.shareBtn {
+    margin: 30px 0px;
+    width: 279px;
+    height: 46.144px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: #60B84B;
+    color: #FFF;
+    font-family:'Poppins', sans-serif;
     font-size: 21px;
     font-style: normal;
     font-weight: 600;

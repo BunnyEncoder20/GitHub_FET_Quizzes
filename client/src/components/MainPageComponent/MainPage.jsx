@@ -12,6 +12,9 @@ import crossIcon from '../../assets/cancel.png'
 import plusIcon from '../../assets/plus.png'
 import delIcon from '../../assets/deleteImg.svg'
 
+// for the confetti animation
+import Confetti from 'react-confetti'
+
 // Importing react toastify module
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -62,12 +65,14 @@ const MainPage = () => {
   // making a state for storing the name of quiz  
   const [title, setTitle] = useState('')
 
+  // state for holding the shareLink of created quiz
+  const [shareLink, setShareLink] = useState('');
+
   // Function to handle first lvl modal form submission (sets Title state)
   const handleFirstSubmit = (e) => {
     const formInputs = new FormData(e.target)
     const payload = Object.fromEntries(formInputs);
-    console.log(payload.title);
-    console.log(activeType);
+
     setTitle(payload.title);
   }
 
@@ -103,6 +108,11 @@ const MainPage = () => {
         console.error("[Axios] Error in Adding quiz", error);
       });
 
+    // Updating the shareLink state for the final share modal
+    setShareLink(newQuiz.shareLink);
+    setShowFinalModal(true)
+
+
     //  Updating the user Context 
     setUser(
       {
@@ -111,6 +121,8 @@ const MainPage = () => {
       }
     )
 
+
+
   }
 
   // making a state for showing Create Modal
@@ -118,6 +130,9 @@ const MainPage = () => {
 
   // making a state for showing Create Quiz form modal
   const [showCreateQuizForm, setShowCreateQuizForm] = useState(false);
+
+  // making a state for showing the final share modal
+  const [showFinalModal, setShowFinalModal] = useState(false);
 
 
   // making a state array for adding/removing Questions & array for Options
@@ -275,8 +290,17 @@ const MainPage = () => {
     setQuestionsArray(newQuestionsArray);
   }
 
-
-  console.log('QuestionsArray - ', questionsArray);
+  // function 4 copying 2 clipboard of user 
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(shareLink)
+      .then(() => {
+        console.log('Link copied to clipboard');
+        notify('✅ Link copied to Clipboard');
+      })
+      .catch(err => {
+        console.error('Could not copy text: ', err);
+      });
+  }
 
   // UseEffect for opening and closing the Initial model 
   const dialogRef = useRef();
@@ -293,12 +317,22 @@ const MainPage = () => {
   const createDialogRef = useRef();
   useEffect(() => {
     if (showCreateQuizForm) {
-      createDialogRef.current.showModal(); // method for opening Dialog tag Modal
+      createDialogRef.current.showModal();
     }
     else {
-      createDialogRef.current.close();     // method for closing Dialog tag Modal
+      createDialogRef.current.close();
     }
   }, [showCreateQuizForm]);
+
+  const finalModalRef = useRef();
+  useEffect(() => {
+    if (showFinalModal) {
+      finalModalRef.current.showModal();
+    }
+    else {
+      finalModalRef.current.close();
+    }
+  }, [showFinalModal]);
 
   return (
     <div className={styles.mainPage}>
@@ -450,6 +484,20 @@ const MainPage = () => {
               <button type='Submit' className={styles.createSubmit} onClick={() => { setShowCreateQuizForm(false); handleSecondSubmit() }}>Create Quiz</button>
             </div>
           </form>
+        </dialog>
+
+        {/* Final sharing Modal */}
+        <dialog ref={finalModalRef} className={styles.shareModal}>
+          <Confetti width='880px' height='400px' tweenDuration={5000}/>
+          <div className={styles.shareContainer}>
+            <h1 className={styles.shareHeading}>Congrats your Quiz is Published!</h1>
+            <input type="text" value={shareLink} className={styles.shareLinkInput} readOnly />
+            <button type="submit" 
+            onClick={() => {setShowFinalModal(false); copyToClipboard()}}
+            className={styles.shareBtn}>
+              Share
+              </button>
+          </div>
         </dialog>
 
       </div>

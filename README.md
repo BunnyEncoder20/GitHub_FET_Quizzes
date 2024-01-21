@@ -48,10 +48,11 @@ for learning properly about form validation with formik and Yup watch [this](htt
 npm i react-toastify
 ```
 
-6. React Tables to create tables in simple way 
+6. React confetti for the celebration animation 
 ```
-npm i react-table
+npm i react-confetti
 ```
+- recommended to define the height and width of the confetti (defaults to initial window dimensions). Import the Confetti from 'react-confetti' and place teh </Confetti height={} width={}> component in your component.
 ---
 
 ## Server Side 
