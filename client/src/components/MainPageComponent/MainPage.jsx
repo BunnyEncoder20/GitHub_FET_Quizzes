@@ -308,7 +308,7 @@ const MainPage = () => {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
               <span className={styles.qBtnContainer}>
                 {questionsArray.map((question, index) => (
-                  <button key={question.qid} type='button' className={styles.qBtn}>Q{index + 1} {question.qid !== 1 && <img src={crossIcon} className={styles.cross} alt='' onClick={() => removeQuestion(question.qid)} />} </button>
+                  <button key={question.qid} type='button' className={styles.qBtn}>Q{index + 1} {question.qid !== 0 && <img src={crossIcon} className={styles.cross} alt='' onClick={() => removeQuestion(question.qid)} />} </button>
                 ))}
                 <span>
                   <img src={plusIcon} className={styles.plus} alt='' onClick={() => {
@@ -320,7 +320,7 @@ const MainPage = () => {
               <span className={styles.limit}>Max 5 Questions</span>
             </div>
             <div className={styles.mappedInputs} >
-              {questionsArray.map((question) => {
+              {questionsArray.map((question,index) => {
                 return (
                   <div key={question.qid}>
                     <div className={styles.questionTextInput}>
@@ -368,7 +368,9 @@ const MainPage = () => {
                         })}
 
                         <div className={styles.options}>
-                          <button type='button' className={styles.addOption} onClick={() => {
+                          <button type='button' 
+                          className={ question.options.length === 4 ? `${styles.noShow}` : `${styles.addOption}`} 
+                          onClick={() => {
                             if (question.options.length < 4)
                               addOption(question.qid)
                           }}>
@@ -376,9 +378,9 @@ const MainPage = () => {
                           </button>
                           <div className={styles.timerContainer}>
                             <button type='button' className={styles.timerTitle}>Timer</button>
-                            <button type='button' className={styles.times} value='0' onClick={(e) => handleQuestionsChange(e.target.value, question.qid, 'isTimed')}>Off</button>
-                            <button type='button' className={styles.times} value='5' onClick={(e) => handleQuestionsChange(e.target.value, question.qid, 'isTimed')}>5 sec</button>
-                            <button type='button' className={styles.times} value='10' onClick={(e) => handleQuestionsChange(e.target.value, question.qid, 'isTimed')}>10 sec</button>
+                            <button type='button' className={ Number(question.isTimed) === 0 ? `${styles.times} ${styles.activeTimes}` : `${styles.times}`} value='0' onClick={(e) => handleQuestionsChange(e.target.value, question.qid, 'isTimed')}>Off</button>
+                            <button type='button' className={ Number(question.isTimed) === 5 ? `${styles.times} ${styles.activeTimes}` : `${styles.times}`} value='5' onClick={(e) => handleQuestionsChange(e.target.value, question.qid, 'isTimed')}>5 sec</button>
+                            <button type='button' className={ Number(question.isTimed) === 10 ? `${styles.times} ${styles.activeTimes}` : `${styles.times}`} value='10' onClick={(e) => handleQuestionsChange(e.target.value, question.qid, 'isTimed')}>10 sec</button>
                           </div>
                         </div>
                       </div>
