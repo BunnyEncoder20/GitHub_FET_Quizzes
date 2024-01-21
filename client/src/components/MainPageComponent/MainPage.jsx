@@ -1,5 +1,11 @@
 import React, { useState, useEffect, useContext, useRef } from 'react'
 
+// Importing axios for RESTful API calls 
+import axios from 'axios'
+
+// Importing jwt-decode for decoding the JWT token
+import { jwtDecode } from "jwt-decode";
+
 // Importing the css module
 import styles from './MainPage.module.css'
 import crossIcon from '../../assets/cancel.png'
@@ -23,7 +29,7 @@ import Analytics from './AnalyticsComponent/Analytics';
 const MainPage = () => {
 
   // Fetch data from userContext
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
 
   // Toastify function 
   const notify = (msg) => {
@@ -65,9 +71,47 @@ const MainPage = () => {
     setTitle(payload.title);
   }
 
+  // declaring constants for generating unique ids 
+  const min = 1000, max = 10000
 
   // function to handle lvl 2 form
-  const handleSecondSubmit = (e) => { }
+  const handleSecondSubmit = () => {
+    // making unique id for each quiz
+    let generatedQuizId = Math.floor(Math.random() * (max - min) + min)
+
+    // Making variables for getting current date 
+    let dateObject = new Date();
+    let monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    // creating a quiz object to add to quizArray
+    const newQuiz = {
+      quizId: generatedQuizId,
+      impressions: 0,
+      shareLink: `http://localhost:400/quizTime/${jwtDecode(user.token).userId}/${generatedQuizId}`,
+      title: title,
+      createdOn: dateObject.getDate() + monthNames[dateObject.getMonth()] + ', ' + dateObject.getFullYear(),
+      quizType: activeType,
+      questions: questionsArray
+    }
+
+    // Make a POST request to the server
+    axios.post(`http://localhost:4000/FET/createQuiz/${jwtDecode(user.token).userId}`, newQuiz)
+      .then(response => {
+        console.log(response.data.message);
+      })
+      .catch(error => {
+        console.error("[Axios] Error in Adding quiz", error);
+      });
+
+    //  Updating the user Context 
+    setUser(
+      {
+        ...user,
+        userQuizData: [...user.userQuizData, newQuiz]
+      }
+    )
+
+  }
 
   // making a state for showing Create Modal
   const [showModal, setShowModal] = useState(false);
@@ -101,14 +145,10 @@ const MainPage = () => {
     answeredIncorrect: 0
   }]);
 
-  // declaring constants for generating unique ids for questions and options
-  const qMin = 10000, qMax = 100000
-  const oMin = 1000, oMax = 10000
-
   // function for handling adding questions & one for adding options
   const handleAddQuestion = () => {
     const newQuestionsArray = [...questionsArray, {
-      qid: Math.floor(Math.random() * (qMax - qMin) + qMin),
+      qid: Math.floor(Math.random() * (max - min) + min),
       questionText: '',
       optionsType: 'text',
       isTimed: 0,
@@ -134,7 +174,7 @@ const MainPage = () => {
   }
 
   const addOption = (qid) => {
-    console.log('qid in addOptions: ', qid)
+    // console.log('qid in addOptions: ', qid)
     // Find the correct question
     const questionIndex = questionsArray.findIndex(question => question.qid === qid);
 
@@ -143,7 +183,7 @@ const MainPage = () => {
 
     // add the new option
     const newOptionsArray = [...optionsArray, {
-      oid: Math.floor(Math.random() * (oMax - oMin) + oMin),
+      oid: Math.floor(Math.random() * (max - min) + min),
       optionText: '',
       optionImg: '',
       isCorrect: false
@@ -286,8 +326,10 @@ const MainPage = () => {
           activePage === 'analytics' && <Analytics />
         }
 
-        {/* Initial CreateQuiz Modal */}
 
+        {/* Create Quiz Section */}
+
+        {/* Initial CreateQuiz Modal */}
         <dialog className={styles.createContainer} ref={dialogRef}>
           <form onSubmit={handleFirstSubmit} method='dialog' className={styles.formLayout}>
 
@@ -319,7 +361,7 @@ const MainPage = () => {
                 <span>
                   <img src={plusIcon}
                     alt=''
-                    className={ questionsArray.length === 5 ? `${styles.noShow}` : `${styles.plus}`}
+                    className={questionsArray.length === 5 ? `${styles.noShow}` : `${styles.plus}`}
                     onClick={() => {
                       if (questionsArray.length !== 5)
                         handleAddQuestion()
@@ -401,10 +443,11 @@ const MainPage = () => {
                   </div>
                 )
               })}
+
             </div>
             <div className={styles.createSubmitBtnContainer}>
               <button type='button' className={styles.createCancel} onClick={() => { setShowCreateQuizForm(false) }}>Cancel</button>
-              <button type='Submit' className={styles.createSubmit} onClick={() => { setShowCreateQuizForm(false) }}>Create Quiz</button>
+              <button type='Submit' className={styles.createSubmit} onClick={() => { setShowCreateQuizForm(false); handleSecondSubmit() }}>Create Quiz</button>
             </div>
           </form>
         </dialog>

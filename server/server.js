@@ -31,8 +31,14 @@ app.listen(process.env.PORT, () => {
 const signupRoute = require('./routes/signup.routes');
 const loginRoute = require('./routes/login.routes');
 const deleteQuizRoute = require('./routes/deleteQuiz.routes');
+const createQuizRoute = require('./routes/createQuiz.routes');
+const takeQuizRoute = require('./routes/takeQuiz.routes');
 
 // using routes 
 app.use('/FET', signupRoute);
 app.use('/FET', loginRoute);
 app.use('/FET', deleteQuizRoute);
+app.use('/FET', createQuizRoute);
+
+// Route for Giving Quiz
+app.use('/FET', takeQuizRoute);
