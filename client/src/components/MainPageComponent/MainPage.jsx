@@ -5,7 +5,6 @@ import styles from './MainPage.module.css'
 import crossIcon from '../../assets/cancel.png'
 import plusIcon from '../../assets/plus.png'
 import delIcon from '../../assets/deleteImg.svg'
-import warningIcon from '../../assets/warning.png'
 
 // Importing react toastify module
 import { ToastContainer, toast } from 'react-toastify';
@@ -207,21 +206,28 @@ const MainPage = () => {
   const handleOptionChange = (textValue = '', imgValue = '', isCorrect, qid, oid) => {
     const questionIndex = questionsArray.findIndex(question => question.qid === qid);
     const optionIndex = questionsArray[questionIndex].options.findIndex(option => option.oid === oid);
+    
 
     // Creating a new questionArray with new values for option
     const newQuestionsArray = [...questionsArray];
+
+    if(isCorrect){
+      newQuestionsArray[questionIndex].options.forEach((option)=>{
+        if(option.oid === oid)
+          option.isCorrect = true;
+        else
+          option.isCorrect = false;
+      })
+    }
     if (questionsArray[questionIndex].optionsType === 'text&ImgURL') {
       newQuestionsArray[questionIndex].options[optionIndex].optionText = textValue;
-      newQuestionsArray[questionIndex].options[optionIndex].isCorrect = isCorrect;
       newQuestionsArray[questionIndex].options[optionIndex].optionImg = imgValue;
     }
     if (questionsArray[questionIndex].optionsType === 'text') {
       newQuestionsArray[questionIndex].options[optionIndex].optionText = textValue;
-      newQuestionsArray[questionIndex].options[optionIndex].isCorrect = isCorrect;
     }
     if (questionsArray[questionIndex].optionsType === 'ImgURL') {
       newQuestionsArray[questionIndex].options[optionIndex].optionImg = imgValue;
-      newQuestionsArray[questionIndex].options[optionIndex].isCorrect = isCorrect;
     }
 
 
@@ -328,15 +334,15 @@ const MainPage = () => {
                     </div>
                     <div className={styles.optionsTypeContainer}>
                       <span>Options type</span>
-                      <label>
+                      <label className={styles.optionTypeLabels}>
                         <input type="radio" name="optionType" id="optionType" value='text' onClick={(e) => handleQuestionsChange(e.target.value, question.qid, 'optionType')} />
                         Text
                       </label>
-                      <label>
+                      <label className={styles.optionTypeLabels}>
                         <input type="radio" name="optionType" id="optionType" value='ImgURL' onClick={(e) => handleQuestionsChange(e.target.value, question.qid, 'optionType')} />
                         ImgURL
                       </label>
-                      <label>
+                      <label className={styles.optionTypeLabels}>
                         <input type="radio" name="optionType" id="optionType" value='text&ImgURL' onClick={(e) => handleQuestionsChange(e.target.value, question.qid, 'optionType')} />
                         Text & ImgURL
                       </label>
@@ -349,17 +355,17 @@ const MainPage = () => {
                               <input type="radio" name="correctOption" onClick={() => handleOptionChange(option.optionText, option.optionImg, true, question.qid, option.oid)} />
 
                               {question.optionsType === 'text' || question.optionsType === 'text&ImgURL' ? (
-                                <input type="text" name="optionText3" id="optionText3"
+                                <input type="text" name="optionText" id="optionText"
                                   placeholder='Text'
                                   onChange={(e) => handleOptionChange(e.target.value, option.optionImg, option.isCorrect, question.qid, option.oid)}
-                                  className={styles.optionTextBox} />
+                                  className={ option.isCorrect ? `${styles.optionTextBox} ${styles.activeOptionTextBox}` : `${styles.optionTextBox}`} />
                               ) : null}
 
                               {question.optionsType === 'text&ImgURL' || question.optionsType === 'ImgURL' ? (
                                 <input type="text" name="optionImgURL3" id="optionImgURL3"
                                   placeholder='Image URL'
                                   onChange={(e) => handleOptionChange(option.optionText, e.target.value, option.isCorrect, question.qid, option.oid)}
-                                  className={styles.optionTextBox} />
+                                  className={ option.isCorrect ? `${styles.optionTextBox} ${styles.activeOptionTextBox}` : `${styles.optionTextBox}`} />
                               ) : null}
 
                               {option.oid > 2 && <span> <img src={delIcon} alt="" className={styles.delIcon} onClick={() => removeOption(question.qid, option.oid)} /> </span>}
