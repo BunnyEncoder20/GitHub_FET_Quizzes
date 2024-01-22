@@ -3,11 +3,13 @@ const router = express.Router()
 
 const app = express()
 
+
 const userModelRef = require('../models/user.model')
 
-router.post('/createQuiz/:uid', async (req, res) => {
+router.post('/updateQuiz/:uid/:qid', async (req, res) => {
     const userId = req.params.uid;
-    const newQuiz = req.body
+    const quizId = req.params.qid;
+    const updatedQuiz = req.body;
     
     try {
         // Check if the user exists
