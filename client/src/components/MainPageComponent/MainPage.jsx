@@ -92,7 +92,7 @@ const MainPage = () => {
     const newQuiz = {
       quizId: generatedQuizId,
       impressions: 0,
-      shareLink: `http://localhost:400/quizTime/${jwtDecode(user.token).userId}/${generatedQuizId}`,
+      shareLink: `http://localhost:4000/quizTime/${jwtDecode(user.token).userId}/${generatedQuizId}`,
       title: title,
       createdOn: dateObject.getDate() + ' ' + monthNames[dateObject.getMonth()] + ', ' + dateObject.getFullYear(),
       quizType: activeType,
@@ -125,13 +125,9 @@ const MainPage = () => {
 
   }
 
-  // making a state for showing Create Modal
+  // making a state for showing initial Create Modal | Create Quiz form modal | final share modal
   const [showModal, setShowModal] = useState(false);
-
-  // making a state for showing Create Quiz form modal
   const [showCreateQuizForm, setShowCreateQuizForm] = useState(false);
-
-  // making a state for showing the final share modal
   const [showFinalModal, setShowFinalModal] = useState(false);
 
 
@@ -217,14 +213,13 @@ const MainPage = () => {
     // console.log('id: ', id);
     setQuestionsArray(questionsArray.filter(question => question.qid !== id));
   };
+
   const removeOption = (qid, oid) => {
     // Find the correct question
     const questionIndex = questionsArray.findIndex(question => question.qid === qid);
 
     // Remove the correct option
     const newOptionsArray = questionsArray[questionIndex].options.filter(option => option.oid !== oid);
-    console.log('qid: ', qid)
-    console.log('oid: ', oid)
 
     // Create a new questions array with the updated options
     const newQuestionsArray = [...questionsArray];
@@ -288,6 +283,46 @@ const MainPage = () => {
 
     // updating the questionArray
     setQuestionsArray(newQuestionsArray);
+  }
+
+  // Function to reset the form and state variables
+  const initialFormRef = useRef();
+  const mainFormRef = useRef();
+  const resetInitialModal = () => {
+    initialFormRef.current.reset();
+    setActiveType('q&a');
+    setTitle('');
+  }
+  const resetMainModal = () => {
+    // reset the initial modal
+    resetInitialModal();
+
+    // reset main form | questionsArray
+    mainFormRef.current.reset();
+    setQuestionsArray([{
+      qid: 0,
+      questionText: '',
+      optionsType: 'text',
+      isTimed: 0,
+      options: [
+        {
+          oid: 0,
+          optionText: '',
+          optionImg: '',
+          isCorrect: false
+        },
+        {
+          oid: 1,
+          optionText: '',
+          optionImg: '',
+          isCorrect: false
+        }
+      ],
+      attempts: 0,
+      answeredCorrect: 0,
+      answeredIncorrect: 0
+    }])
+
   }
 
   // function 4 copying 2 clipboard of user 
@@ -365,7 +400,7 @@ const MainPage = () => {
 
         {/* Initial CreateQuiz Modal */}
         <dialog className={styles.createContainer} ref={dialogRef}>
-          <form onSubmit={handleFirstSubmit} method='dialog' className={styles.formLayout}>
+          <form onSubmit={handleFirstSubmit} method='dialog' className={styles.formLayout} ref={initialFormRef}>
 
             <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
               <input type="text" name="title" id="title" className={styles.title} placeholder='Quiz Name' />
@@ -376,16 +411,23 @@ const MainPage = () => {
               <button className={activeType === 'poll' ? `${styles.btn} ${styles.createActive}` : `${styles.btn}`} type="button" onClick={() => setActiveType('poll')}>Poll</button>
             </div>
             <div className={styles.btnContainer}>
-              {/* add later : onClick={()=>setShowModal(false)} */}
-              <span><button className={styles.submissionBtn} onClick={() => setShowModal(false)}>Cancel</button></span>
-              <span><button type='submit' className={`${styles.submissionBtn} ${styles.createActive}`} onClick={() => { setShowModal(false); setShowCreateQuizForm(true) }}>Continue</button></span>
+              <span>
+                <button className={styles.submissionBtn} onClick={() => {setShowModal(false); resetInitialModal()}}>
+                  Cancel
+                </button>
+              </span>
+              <span>
+                <button type='submit' className={`${styles.submissionBtn} ${styles.createActive}`} onClick={() => { setShowModal(false); setShowCreateQuizForm(true) }}>
+                  Continue
+                </button>
+              </span>
             </div>
           </form>
         </dialog>
 
         {/* Main Creating Quiz Modal */}
         <dialog ref={createDialogRef} className={styles.mainCreateModal}>
-          <form method='dialog' >
+          <form method='dialog' ref={mainFormRef}>
 
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
               <span className={styles.qBtnContainer}>
@@ -440,14 +482,14 @@ const MainPage = () => {
                                 <input type="text" name="optionText" id="optionText"
                                   placeholder='Text'
                                   onChange={(e) => handleOptionChange(e.target.value, option.optionImg, option.isCorrect, question.qid, option.oid)}
-                                  className={option.isCorrect ? `${styles.optionTextBox} ${styles.activeOptionTextBox}` : `${styles.optionTextBox}`} />
+                                  className={option.isCorrect && activeType === 'q&a' ? `${styles.optionTextBox} ${styles.activeOptionTextBox}` : `${styles.optionTextBox}`} />
                               ) : null}
 
                               {question.optionsType === 'text&ImgURL' || question.optionsType === 'ImgURL' ? (
                                 <input type="text" name="optionImgURL3" id="optionImgURL3"
                                   placeholder='Image URL'
                                   onChange={(e) => handleOptionChange(option.optionText, e.target.value, option.isCorrect, question.qid, option.oid)}
-                                  className={option.isCorrect ? `${styles.optionTextBox} ${styles.activeOptionTextBox}` : `${styles.optionTextBox}`} />
+                                  className={option.isCorrect && activeType === 'q&a' ? `${styles.optionTextBox} ${styles.activeOptionTextBox}` : `${styles.optionTextBox}`} />
                               ) : null}
 
                               {option.oid > 2 && <span> <img src={delIcon} alt="" className={styles.delIcon} onClick={() => removeOption(question.qid, option.oid)} /> </span>}
@@ -480,7 +522,7 @@ const MainPage = () => {
 
             </div>
             <div className={styles.createSubmitBtnContainer}>
-              <button type='button' className={styles.createCancel} onClick={() => { setShowCreateQuizForm(false) }}>Cancel</button>
+              <button type='button' className={styles.createCancel} onClick={() => { setShowCreateQuizForm(false);resetMainModal() }}>Cancel</button>
               <button type='Submit' className={styles.createSubmit} onClick={() => { setShowCreateQuizForm(false); handleSecondSubmit() }}>Create Quiz</button>
             </div>
           </form>
@@ -488,15 +530,15 @@ const MainPage = () => {
 
         {/* Final sharing Modal */}
         <dialog ref={finalModalRef} className={styles.shareModal}>
-          <Confetti width='880px' height='400px' tweenDuration={5000}/>
+          <Confetti width='880px' height='400px' tweenDuration={5000} />
           <div className={styles.shareContainer}>
             <h1 className={styles.shareHeading}>Congrats your Quiz is Published!</h1>
             <input type="text" value={shareLink} className={styles.shareLinkInput} readOnly />
-            <button type="submit" 
-            onClick={() => {setShowFinalModal(false); copyToClipboard()}}
-            className={styles.shareBtn}>
+            <button type="submit"
+              onClick={() => { setShowFinalModal(false); copyToClipboard(); resetMainModal(); }}
+              className={styles.shareBtn}>
               Share
-              </button>
+            </button>
           </div>
         </dialog>
 
