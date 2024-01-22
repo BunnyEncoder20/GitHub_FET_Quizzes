@@ -30,13 +30,13 @@ const Analytics = () => {
 
   // Toastify function 
   const notify = (msg) => {
-    toast.info(<>{msg}</>, {
+    toast.info(msg, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
-      draggable: false,
+      draggable: true,
       progress: undefined,
       theme: "colored",
     });
@@ -46,8 +46,8 @@ const Analytics = () => {
   const copyToClipboard = (shareLink) => {
     navigator.clipboard.writeText(shareLink)
       .then(() => {
-        console.log('Link copied to clipboard');
         notify('✅ Link copied to Clipboard');
+        console.log('Link Copied to Clipboard')
       })
       .catch(err => {
         console.error('Could not copy text: ', err);
@@ -120,17 +120,20 @@ const Analytics = () => {
 
 
 
+        //notify('✅ Quiz Deleted');   // causing a double render of the toastify message and causing app to crash when placed inside this delQuiz function
 
-        // notify('✅ Deleted Quiz');   // causing a double render of the toastify message and causing app to crash when placed inside this delQuiz function
       } else {
         console.error('Failed to delete quiz');
-        notify('☠️ Failed to Delete the quiz <br/>Server sent back status 500');
+        console.log('Failed to Delete the quiz <br/>Server sent back status 500');
+        // notify('☠️ Failed to Delete the quiz <br/>Server sent back status 500');
       }
+
       toggleDialog(''); // closing the delPopup
 
     }
     catch (error) {
-      notify(<>☠️ Error while Sending deleting Request to DB<br />error</>);
+      //notify(<>☠️ Error while Sending deleting Request to DB<br />error</>);
+      console.log('Error while Sending deleting Request to DB',error);
     }
   };
 
@@ -182,28 +185,31 @@ const Analytics = () => {
               <span><button onClick={() => toggleDialog('')}>Cancel</button></span>
             </dialog>
 
-
-
-            {/* Toastify Container added here */}
-            <ToastContainer
-              position="top-right"
-              autoClose={5000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover={false}
-              theme="light"
-              icon={false}
-            />
           </div>
+
         )
       }
+
+      {/* Question Wise Analysis Page */}
       {
         showAnalysis.state && <Questions quizId={showAnalysis.quiz} />
       }
+
+      {/* Toastify Container added here */}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+        icon={false}
+      />
+
     </>
   )
 }
