@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 // Importing axios for RESTful API calls 
 import axios from 'axios'
@@ -6,8 +7,7 @@ import axios from 'axios'
 // Importing jwt-decode for decoding the JWT token
 import { jwtDecode } from "jwt-decode";
 
-// Importing react-cookie for cookie management
-import Cookies from 'universal-cookie'
+
 
 // Importing the css module
 import styles from './MainPage.module.css'
@@ -28,7 +28,6 @@ import { UserContext } from '../../context/UserContext';
 // Importing Components 
 import Dashboard from './DashboardComponent/Dashboard';
 import Analytics from './AnalyticsComponent/Analytics';
-import { Navigate } from 'react-router-dom';
 
 
 
@@ -37,6 +36,10 @@ const MainPage = () => {
 
   // Fetch data from userContext
   const { user, setUser } = useContext(UserContext);
+
+  // Remember to define navigate at top level of function other it will cause Invalid Hook error 
+  const navigate = useNavigate();
+
 
   // Toastify function 
   const notify = (msg) => {
@@ -96,7 +99,7 @@ const MainPage = () => {
     const newQuiz = {
       quizId: generatedQuizId,
       impressions: 0,
-      shareLink: `http://localhost:4000/quizTime/${jwtDecode(user.token).userId}/${generatedQuizId}`,
+      shareLink: `http://localhost:3000/quiztime/${jwtDecode(user.token).userId}/${generatedQuizId}`,
       title: title,
       createdOn: dateObject.getDate() + ' ' + monthNames[dateObject.getMonth()] + ', ' + dateObject.getFullYear(),
       quizType: activeType,
@@ -124,8 +127,6 @@ const MainPage = () => {
         userQuizData: [...user.userQuizData, newQuiz]
       }
     )
-
-
 
   }
 
@@ -373,12 +374,10 @@ const MainPage = () => {
     }
   }, [showFinalModal]);
 
-  // initialize cookie 
-  const cookies = new Cookies();
+
   const logoutUser = () => {
-    setUser(null);
-    cookies.remove("jwt_token_cookie");
-    Navigate('/');
+    setUser({});
+    navigate('/');
   }
 
   return (

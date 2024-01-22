@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 const express = require('express')
 
-const ejs = require('ejs')
 const body_parser = require('body-parser')
 const dotenv = require('dotenv')
 const cors = require('cors')
@@ -11,6 +10,7 @@ const cors = require('cors')
 // Initialize the express app and bringing in the dotenv variables 
 const app = express()
 dotenv.config()
+
 
 // Setting up universal middlewares
 app.use(body_parser.urlencoded({ extended: false }))  // for parsing the req.body data 

@@ -59,7 +59,7 @@ npm i react-confetti
 ```
 npm i react-cookie
 ```
-
+- installed but not used.
 ---
 
 ## Server Side 

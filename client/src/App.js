@@ -10,6 +10,7 @@ import './App.css';
 // Importing Components
 import Login from './components/LoginComponent/Login'
 import MainPage from './components/MainPageComponent/MainPage';
+import QuizPage from './components/QuizPageComponent/QuizPage';
 import PrivateRoutes from './utils/Private.routes'
 
 // Importing context providers 
@@ -23,11 +24,10 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Login />} />
-            {/* For development have made every route unprotected */}
-            <Route path='/mainpage' element={<MainPage />}  />
+            <Route path="/quiztime/:uid/:qid" element={<QuizPage />} />
             {/* Private Routes */}
             <Route element={<PrivateRoutes />}>
-              {/* <Route path='/mainpage' element={<MainPage />}  /> */}
+              <Route path='/mainpage' element={<MainPage />}  />
             </Route>
             
           </Routes>

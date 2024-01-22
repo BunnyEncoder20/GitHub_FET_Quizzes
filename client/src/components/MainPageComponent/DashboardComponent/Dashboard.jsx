@@ -13,7 +13,7 @@ import { UserContext } from '../../../context/UserContext';
 const Dashboard = () => {
 
     // States for holding data : 
-    const [userQuizData, setUserQuizData] = useState([]);
+    
     const [stats, setStats] = useState({
         numberOfQuizzes:0,
         numberOfQuestions:0,
@@ -66,7 +66,6 @@ const Dashboard = () => {
             </div>
             <div className={styles.heading}>Treading Quizs</div>
             <div className={styles.quizMade}>
-                {/* Replace this with your actual data */}
                 {user && user.userQuizData && user.userQuizData.map((_, i) => (
                     <div key={i} className={styles.quizBox}>
                         <div>
