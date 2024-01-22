@@ -128,12 +128,20 @@ const Analytics = () => {
 
 
     //  Updating the user Context 
-    setUser(
-      {
+    let quizIndex = user.userQuizData.findIndex((quiz) => quiz.quizId === activeQuiz.quizId);
+    if (quizIndex !== -1) {
+      // Replace the quiz at the found index with the updatedQuiz
+      let updatedUserQuizData = [...user.userQuizData];
+      updatedUserQuizData[quizIndex] = updatedQuiz;
+
+      // Update the user context
+      setUser({
         ...user,
-        userQuizData: [...user.userQuizData, updatedQuiz]
-      }
-    )
+        userQuizData: updatedUserQuizData
+      });
+    } else {
+      console.log('Quiz not found in userQuizData');
+    }
 
 
 
@@ -356,13 +364,13 @@ const Analytics = () => {
 
   // UseEffect for setting the Quiz with quiz details
   useEffect(() => {
-    if(activeQuiz){
+    if (activeQuiz) {
       setQuestionsArray(activeQuiz.questions)
       setActiveType(activeQuiz.quizType)
       setTitle(activeQuiz.title)
     }
   }, [activeQuiz]);
-  
+
 
 
   // Creating a useEffect to listen for changes to isOpen state
@@ -442,7 +450,7 @@ const Analytics = () => {
                     <span>{user.userQuizData[index].createdOn}</span>
                     <span>{user.userQuizData[index].impressions}</span>
                     <span>
-                      <button className={styles.editBtn} onClick={() => {setShowCreateQuizForm(true); setActiveQuiz(user.userQuizData[index]); console.log(user.userQuizData)}}> <img src={editImg} alt='edit' /> </button>
+                      <button className={styles.editBtn} onClick={() => { setShowCreateQuizForm(true); setActiveQuiz(user.userQuizData[index]); console.log(user.userQuizData) }}> <img src={editImg} alt='edit' /> </button>
                       <button className={styles.deleteBtn} onClick={() => toggleDialog(user.userQuizData[index].quizId)}> <img src={deleteImg} alt='del' /> </button>
                       <button className={styles.shareBtn} onClick={() => copyToClipboard(user.userQuizData[index].shareLink)}>
                         <img src={shareImg} alt='share' />

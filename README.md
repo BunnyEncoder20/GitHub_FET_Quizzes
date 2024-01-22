@@ -54,6 +54,12 @@ npm i react-confetti
 ```
 - recommended to define the height and width of the confetti (defaults to initial window dimensions). Import the Confetti from 'react-confetti' and place teh </Confetti height={} width={}> component in your component.
 - Read more about it , pretty easy doc to understand : [website](https://www.npmjs.com/package/react-confetti)
+
+7. REact Cookie for universal cookie management
+```
+npm i react-cookie
+```
+
 ---
 
 ## Server Side 

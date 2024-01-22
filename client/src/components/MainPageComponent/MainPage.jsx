@@ -6,6 +6,9 @@ import axios from 'axios'
 // Importing jwt-decode for decoding the JWT token
 import { jwtDecode } from "jwt-decode";
 
+// Importing react-cookie for cookie management
+import Cookies from 'universal-cookie'
+
 // Importing the css module
 import styles from './MainPage.module.css'
 import crossIcon from '../../assets/cancel.png'
@@ -25,6 +28,7 @@ import { UserContext } from '../../context/UserContext';
 // Importing Components 
 import Dashboard from './DashboardComponent/Dashboard';
 import Analytics from './AnalyticsComponent/Analytics';
+import { Navigate } from 'react-router-dom';
 
 
 
@@ -369,6 +373,14 @@ const MainPage = () => {
     }
   }, [showFinalModal]);
 
+  // initialize cookie 
+  const cookies = new Cookies();
+  const logoutUser = () => {
+    setUser(null);
+    cookies.remove("jwt_token_cookie");
+    Navigate('/');
+  }
+
   return (
     <div className={styles.mainPage}>
 
@@ -381,7 +393,7 @@ const MainPage = () => {
           <li><button className={`${styles.btn} ${styles.inactive}`} onClick={() => setShowModal(true)}>Create Quiz</button></li>
         </ul>
         <hr />
-        <button>Logout</button>
+        <button onClick={() => logoutUser()}>Logout</button>
       </div>
 
       <div className="content">

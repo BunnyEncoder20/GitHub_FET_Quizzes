@@ -11,6 +11,9 @@ import * as Yup from 'yup'
 // Importing axios for RESTful API calls 
 import axios from 'axios'
 
+// Importing react-cookie for cookie management
+import Cookies from 'universal-cookie'
+
 // Importing the css module
 import styles from './Login.module.css'
 
@@ -29,6 +32,9 @@ const Login = () => {
 
   // Importing navigate 
   const navigate = useNavigate();
+
+  // initialize cookie 
+  const cookies = new Cookies();
 
   // React Toastify, for registration
   const registerNotify = (success, data) => {
@@ -168,6 +174,8 @@ const Login = () => {
 
           if (res.data.status) {
             loginNotify(true, res.data)    // calling function for successful login
+
+
 
             setUser({
               ...user,

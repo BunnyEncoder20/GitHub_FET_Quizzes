@@ -32,13 +32,17 @@ const signupRoute = require('./routes/signup.routes');
 const loginRoute = require('./routes/login.routes');
 const deleteQuizRoute = require('./routes/deleteQuiz.routes');
 const createQuizRoute = require('./routes/createQuiz.routes');
+const updateQuizRoute = require('./routes/updateQuiz.routes');
+
+// Quiz Taking Route with EJS
 const takeQuizRoute = require('./routes/takeQuiz.routes');
 
-// using routes 
+// Quizze API routes 
 app.use('/FET', signupRoute);
 app.use('/FET', loginRoute);
 app.use('/FET', deleteQuizRoute);
 app.use('/FET', createQuizRoute);
+app.use('/FET', updateQuizRoute);
 
 // Route for Giving Quiz
 app.use('/FET', takeQuizRoute);
