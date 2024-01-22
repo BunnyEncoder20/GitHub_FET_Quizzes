@@ -5,6 +5,9 @@ import axios from 'axios';
 // Importing styles & Assets 
 import styles from './QuizPage.module.css'
 import impIcon from '../../assets/icon-park-outline_eyes.svg'
+import EndingImg from '../../assets/quizEnd.png'
+// for the confetti animation
+import Confetti from 'react-confetti'
 
 const QuizPage = ({ match }) => {
 
@@ -35,6 +38,10 @@ const QuizPage = ({ match }) => {
         setCurrentQuestionIndex(currentQuestionIndex + 1);
     };
 
+    // State for timer 
+    // const [timer, setTimer] = useState(quiz.questions[currentQuestionIndex].isTimed);
+
+
     return (
         <div className={styles.quizPage}>
             <div className={styles.quizContainer}>
@@ -50,15 +57,23 @@ const QuizPage = ({ match }) => {
                         </div>
                     </div>
                 ) : currentQuestionIndex >= quiz.questions.length ? (
-                    <div className={styles.endContainer}>
-                        
-                    </div>
+                    <>
+                        <Confetti width='1107px' height='680px' tweenDuration={5000} />
+                        <div className={styles.endContainer}>
+                            <div className={styles.endPage}>
+                                <div>Congrats Quiz is completed</div>
+                                <img src={EndingImg} alt="" width={320} height={323} />
+                                <div>Your Score is <span className={styles.finalScore}>{`03/${quiz.questions.length}`}</span></div>
+                            </div>
+                        </div>
+                    </>
+
                 ) : (
                     <div className={styles.questionBoxContainer}>
                         <div className={styles.questionBox}>
                             <div className={styles.indexTimer}>
                                 <span className={styles.index}> 0{currentQuestionIndex + 1} / 0{quiz.questions.length}</span>
-                                <span className={styles.timer}>Timer : {`00:10s`}</span>
+                                {/* {timer > 0 && <span className={styles.timer}>Timer : {`00:${timer}s`}</span>} */}
                             </div>
 
                             <div className={styles.questionText}>{quiz.questions[currentQuestionIndex].questionText}</div>
@@ -76,10 +91,14 @@ const QuizPage = ({ match }) => {
                                         </tr>
                                     </tbody>
                                 </table>
-                                
                             </div>
 
-                            <button onClick={nextQuestion} className={styles.nextBtn}>Next</button>
+                            <button
+                                onClick={() => { nextQuestion(); }}
+                                className={styles.nextBtn}
+                            >
+                                Next
+                            </button>
                         </div>
                     </div>
                 )}

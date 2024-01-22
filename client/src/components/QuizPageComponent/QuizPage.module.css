@@ -16,7 +16,7 @@
     flex-shrink: 0;
     border-radius: 15px;
     background: #FFF;
-    filter: drop-shadow(0px 0px 10px rgba(255, 255, 255, 0.5));
+    filter: drop-shadow(0px 0px 10px rgba(255, 255, 255, 0.75));
     padding: 20px;
 
     display: flex;
@@ -38,7 +38,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 200px;
+    gap: 400px;
+    margin-top: 70px;
     margin-bottom: 40px;
 }
 
@@ -55,7 +56,7 @@
 
     display: flex;
     justify-content: center;
-    margin-bottom: 200px;
+    margin: 100px 0px;
 
     text-align: center;
     color: #60B84B;
@@ -74,14 +75,14 @@
 }
 
 .startBtn {
-    width: 279px;
-    height: 46.144px;
+    width: 320px;
+    height: 112px;
     flex-shrink: 0;
     border-radius: 10px;
     background: #60B84B;
     color: #FFF;
     font-family: 'Poppins', sans-serif;
-    font-size: 21px;
+    font-size: 35px;
     font-style: normal;
     font-weight: 600;
     line-height: normal;
@@ -196,4 +197,27 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+/* Styles for Ending Page */
+.endContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.endPage {
+    color: #474444;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    height: 100%;
+    margin-top: 80px;
+}
+
+.finalScore {
+    color: #60B84B;
 }
