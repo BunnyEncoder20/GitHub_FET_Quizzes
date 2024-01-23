@@ -65,7 +65,7 @@ const QuizPage = () => {
             let data = {userAnswers:answers,isPoll:false}
             axios.post(`http://localhost:4000/FET/updateQuizStats/${uid}/${qid}`, data)
                 .then(response => {
-                    console.log(response);
+                    console.log('[Mongo] OK');
                 })
                 .catch(err => {
                     console.log("ERROR: ", err)
