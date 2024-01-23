@@ -27,9 +27,13 @@ router.get('/quiztime/:uid/:qid', async (req, res) => {
 
         // console.log('quiz found : ', userDoc.quizzesMade[quiz].title);
 
+        userDoc.quizzesMade[quiz].impressions = parseInt(userDoc.quizzesMade[quiz].impressions) + 1;
+
         res.json({
             quiz: userDoc.quizzesMade[quiz]
         })
+
+        await userDoc.save();
 
     } catch (error) {
         res.status(500).send({ message: `[Mongo] NOPE : ${error}` });

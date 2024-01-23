@@ -36,6 +36,7 @@ const updateQuizRoute = require('./routes/updateQuiz.routes');
 
 // Quiz Taking Route with EJS
 const takeQuizRoute = require('./routes/takeQuiz.routes');
+const updateQuizStats = require('./routes/updateQuizStats.routes');
 
 // Quizze API routes 
 app.use('/FET', signupRoute);
@@ -46,3 +47,4 @@ app.use('/FET', updateQuizRoute);
 
 // Route for Giving Quiz
 app.use('/FET', takeQuizRoute);
+app.use('/FET', updateQuizStats);

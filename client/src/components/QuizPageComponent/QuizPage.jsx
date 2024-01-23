@@ -13,7 +13,7 @@ import Confetti from 'react-confetti'
 import Timer from '../../utils/Timer.js'
 import QuizOptions from './QuizOptions.jsx'
 
-const QuizPage = ({ match }) => {
+const QuizPage = () => {
 
     // Getting params from react-router-dom
     const { uid, qid } = useParams();
@@ -29,7 +29,6 @@ const QuizPage = ({ match }) => {
     useEffect(() => {
         const fetchQuiz = async () => {
             const response = await axios.get(`http://localhost:4000/FET/quiztime/${uid}/${qid}`);
-            console.log(response.data.quiz);
             setQuiz(response.data.quiz);
         };
 
@@ -50,29 +49,24 @@ const QuizPage = ({ match }) => {
 
     const getResults = () => {
         let score = 0;
-        let attempts = 0;
-        let answeredCorrect = 0;
-        let answeredIncorrect = 0;
         answers.forEach(answer => {
-            if (answer && answer.isCorrect) {
+            if (answer && answer.isCorrect)
                 score += 1;
-                answeredCorrect += 1;
-                attempts += 1;
-            }
-            else if(answer && !answer.isCorrect) { 
-                attempts += 1;
-                answeredIncorrect += 1;
-            }
         });
 
-        console.log('answers received:',answers)
-        console.log('attempts:', attempts)
-        console.log('answeredCorrect:', answeredCorrect)
-        console.log('answeredIncorrect:', answeredIncorrect)
         return score;
     }
 
-
+    const sendData = () => {
+        // Sending Data to Server
+        axios.post(`http://localhost:4000/FET/updateQuizStats/${uid}/${qid}`, answers)
+            .then(response => {
+                console.log(response);
+            })
+            .catch(err => {
+                console.log("ERROR: ", err)
+            })
+    }
 
     return (
         <div className={styles.quizPage}>
@@ -113,7 +107,7 @@ const QuizPage = ({ match }) => {
                             <QuizOptions numQuestions={quiz.questions.length} currentQuestionIndex={currentQuestionIndex} options={quiz.questions[currentQuestionIndex].options} optionType={quiz.questions[currentQuestionIndex].optionsType} callBack={handleAnswersFromChild} />
 
                             <button
-                                onClick={() => nextQuestion()}
+                                onClick={currentQuestionIndex === quiz.questions.length - 1 ? ()=>{nextQuestion();sendData()} : () => nextQuestion()}
                                 className={styles.nextBtn}>
                                 {currentQuestionIndex === quiz.questions.length - 1 ? 'Submit' : 'Next'}
                             </button>
