@@ -37,11 +37,11 @@ router.post('/updateQuizStats/:uid/:qid', async (req, res) => {
 
                 if (userAnswered) {
 
-                    question.attempts += 1;
+                    question.attempts = parseInt(question.attempts) + 1;
                     if (userAnswered.isCorrect)
-                        question.answeredCorrect += 1;
+                        question.answeredCorrect = parseInt(question.answeredCorrect) + 1;
                     else
-                        question.answeredIncorrect += 1;
+                        question.answeredIncorrect = parseInt(question.answeredIncorrect) + 1;
                 }
             })
         }
@@ -55,7 +55,7 @@ router.post('/updateQuizStats/:uid/:qid', async (req, res) => {
                     const selectedOption = question.options.find(option => option._id.toString() === userAnswered._id);
                     if (selectedOption) {
                         console.log('selected option found...');
-                        selectedOption.opted += 1;
+                        selectedOption.opted = parseInt(selectedOption.opted) + 1;
                     }
                 });
             }

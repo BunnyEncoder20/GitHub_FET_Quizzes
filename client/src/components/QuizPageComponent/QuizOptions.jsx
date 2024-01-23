@@ -9,7 +9,7 @@ const QuizOptions = ({ numQuestions, currentQuestionIndex, options, optionType, 
     const [answers, setAnswers] = useState([]);
 
     useEffect(() => {
-        if(answers.length === numQuestions) {
+        if(answers.length+1 === numQuestions) {
             callBack(answers);
         }
     }, [answers,numQuestions,callBack]);

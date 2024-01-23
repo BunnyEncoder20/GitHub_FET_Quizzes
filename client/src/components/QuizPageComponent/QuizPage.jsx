@@ -62,7 +62,7 @@ const QuizPage = () => {
         const userAnswers = answers.map(answer => answer || null);
 
         if (quiz.quizType === 'q&a') {
-            let data = {userAnswers:answers,isPoll:false}
+            let data = { userAnswers: answers, isPoll: false }
             axios.post(`http://localhost:4000/FET/updateQuizStats/${uid}/${qid}`, data)
                 .then(response => {
                     console.log('[Mongo] OK');
@@ -72,7 +72,7 @@ const QuizPage = () => {
                 })
         }
         else {
-            let data = {userAnswers:answers,isPoll:true}
+            let data = { userAnswers: answers, isPoll: true }
             axios.post(`http://localhost:4000/FET/updateQuizStats/${uid}/${qid}`, data)
                 .then(response => {
                     console.log(response);
@@ -82,6 +82,8 @@ const QuizPage = () => {
                 })
         }
     }
+
+
 
     return (
         <div className={styles.quizPage}>
@@ -100,7 +102,8 @@ const QuizPage = () => {
                 ) : currentQuestionIndex >= quiz.questions.length ? (
                     quiz.quizType === 'q&a' ? (
                         <>
-                            <Confetti width='1107px' height='680px' tweenDuration={5000} />
+                            {window.innerWidth>=450 ? <Confetti width='1107px' height='680px' tweenDuration={5000} /> : <Confetti width='450px' height='700px' tweenDuration={5000} numberOfPieces={100} />}
+                            
                             <div className={styles.endContainer}>
                                 <div className={styles.endPage}>
                                     <div>Congrats Quiz is completed</div>
