@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, memo } from 'react'
 
-const Timer = ({ duration, onTimeEnd }) => {
-
+const Timer = React.memo(({ duration, onTimeEnd }) => {
     const [Time, setTime] = useState(duration);
     const timerId = useRef();
 
@@ -26,11 +25,7 @@ const Timer = ({ duration, onTimeEnd }) => {
         return `00:${seconds < 10 ? '0' : ''}${seconds}s`;
     }
 
-    return (
-        <>
-            {formatTime(Time)}
-        </>
-    )
-}
+    return (<>{formatTime(Time)}</>)
+});
 
 export default Timer

@@ -9,8 +9,9 @@ import EndingImg from '../../assets/quizEnd.png'
 // for the confetti animation
 import Confetti from 'react-confetti'
 
-// Importing Timer Comp
+// Importing Components
 import Timer from '../../utils/Timer.js'
+import QuizOptions from './QuizOptions.jsx'
 
 const QuizPage = ({ match }) => {
 
@@ -20,6 +21,7 @@ const QuizPage = ({ match }) => {
     // states 
     const [quiz, setQuiz] = useState({});
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(-1);
+    
 
 
     //   fetching quiz data from server
@@ -41,8 +43,6 @@ const QuizPage = ({ match }) => {
         setCurrentQuestionIndex(currentQuestionIndex + 1);
     };
 
-    // State for timer 
-    // const [timer, setTimer] = useState(quiz.questions[currentQuestionIndex].isTimed);
 
 
     return (
@@ -76,31 +76,17 @@ const QuizPage = ({ match }) => {
                         <div className={styles.questionBox}>
                             <div className={styles.indexTimer}>
                                 <span className={styles.index}> 0{currentQuestionIndex + 1} / 0{quiz.questions.length}</span>
-                                { quiz.questions[currentQuestionIndex].isTimed > 0 ? (<span className={styles.timer}><Timer duration={quiz.questions[currentQuestionIndex].isTimed} onTimeEnd={nextQuestion} /></span>): <span>&emsp;&emsp;&emsp;</span>}
+                                {quiz.questions[currentQuestionIndex].isTimed > 0 ? (<span className={styles.timer}><Timer duration={quiz.questions[currentQuestionIndex].isTimed} onTimeEnd={nextQuestion} /></span>) : <span>&emsp;&emsp;&emsp;</span>}
                             </div>
 
                             <div className={styles.questionText}>{quiz.questions[currentQuestionIndex].questionText}</div>
 
-                            <div className={styles.optionTable}>
-                                <table>
-                                    <tbody>
-                                        <tr className={styles.optionRow}>
-                                            {quiz.questions[currentQuestionIndex].options[0] && <td className={styles.optionCol}> <button className={styles.optionColBtn}>{quiz.questions[currentQuestionIndex].options[0].optionText}</button> </td>}
-                                            {quiz.questions[currentQuestionIndex].options[1] && <td className={styles.optionCol}> <button className={styles.optionColBtn}> {quiz.questions[currentQuestionIndex].options[1].optionText}</button> </td>}
-                                        </tr>
-                                        <tr className={styles.optionRow}>
-                                            {quiz.questions[currentQuestionIndex].options[2] && <td className={styles.optionCol}> <button className={styles.optionColBtn}> {quiz.questions[currentQuestionIndex].options[2].optionText}</button> </td>}
-                                            {quiz.questions[currentQuestionIndex].options[3] && <td className={styles.optionCol}> <button className={styles.optionColBtn}> {quiz.questions[currentQuestionIndex].options[3].optionText}</button> </td>}
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                            <QuizOptions currentQuestionIndex = {currentQuestionIndex} options={quiz.questions[currentQuestionIndex].options} optionType={quiz.questions[currentQuestionIndex].optionsType} />
 
                             <button
-                                onClick={() => { nextQuestion(); console.log('index:',currentQuestionIndex); console.log('length : ',quiz.questions.length); }}
-                                className={styles.nextBtn}
-                            >
-                                {currentQuestionIndex === quiz.questions.length-1 ? 'Submit' : 'Next'}
+                                onClick={() => nextQuestion()}
+                                className={styles.nextBtn}>
+                                {currentQuestionIndex === quiz.questions.length - 1 ? 'Submit' : 'Next'}
                             </button>
                         </div>
                     </div>
