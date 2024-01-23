@@ -21,7 +21,8 @@ const QuizPage = ({ match }) => {
     // states 
     const [quiz, setQuiz] = useState({});
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(-1);
-    
+    const [answers, setAnswers] = useState([]);
+
 
 
     //   fetching quiz data from server
@@ -42,6 +43,34 @@ const QuizPage = ({ match }) => {
     const nextQuestion = () => {
         setCurrentQuestionIndex(currentQuestionIndex + 1);
     };
+
+    const handleAnswersFromChild = (answersFromChild) => {
+        setAnswers(answersFromChild);
+    }
+
+    const getResults = () => {
+        let score = 0;
+        let attempts = 0;
+        let answeredCorrect = 0;
+        let answeredIncorrect = 0;
+        answers.forEach(answer => {
+            if (answer && answer.isCorrect) {
+                score += 1;
+                answeredCorrect += 1;
+                attempts += 1;
+            }
+            else if(answer && !answer.isCorrect) { 
+                attempts += 1;
+                answeredIncorrect += 1;
+            }
+        });
+
+        console.log('answers received:',answers)
+        console.log('attempts:', attempts)
+        console.log('answeredCorrect:', answeredCorrect)
+        console.log('answeredIncorrect:', answeredIncorrect)
+        return score;
+    }
 
 
 
@@ -66,7 +95,7 @@ const QuizPage = ({ match }) => {
                             <div className={styles.endPage}>
                                 <div>Congrats Quiz is completed</div>
                                 <img src={EndingImg} alt="" width={320} height={323} />
-                                <div>Your Score is <span className={styles.finalScore}>{`03/0${quiz.questions.length}`}</span></div>
+                                <div>Your Score is <span className={styles.finalScore}>0{getResults()}/0{quiz.questions.length}</span></div>
                             </div>
                         </div>
                     </>
@@ -81,7 +110,7 @@ const QuizPage = ({ match }) => {
 
                             <div className={styles.questionText}>{quiz.questions[currentQuestionIndex].questionText}</div>
 
-                            <QuizOptions currentQuestionIndex = {currentQuestionIndex} options={quiz.questions[currentQuestionIndex].options} optionType={quiz.questions[currentQuestionIndex].optionsType} />
+                            <QuizOptions numQuestions={quiz.questions.length} currentQuestionIndex={currentQuestionIndex} options={quiz.questions[currentQuestionIndex].options} optionType={quiz.questions[currentQuestionIndex].optionsType} callBack={handleAnswersFromChild} />
 
                             <button
                                 onClick={() => nextQuestion()}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, memo } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
 const Timer = React.memo(({ duration, onTimeEnd }) => {
     const [Time, setTime] = useState(duration);

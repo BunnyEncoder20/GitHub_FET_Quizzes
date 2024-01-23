@@ -1,12 +1,18 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 // Importing Styles 
 import styles from './QuizPage.module.css';
 
 
-const QuizOptions = ({ currentQuestionIndex, options, optionType }) => {
+const QuizOptions = ({ numQuestions, currentQuestionIndex, options, optionType, callBack }) => {
 
     const [answers, setAnswers] = useState([]);
+
+    useEffect(() => {
+        if(answers.length === numQuestions) {
+            callBack(answers);
+        }
+    }, [answers,numQuestions,callBack]);
 
     const handleAnswer = (optionIndex) => {
         setAnswers(prev => {
@@ -17,9 +23,11 @@ const QuizOptions = ({ currentQuestionIndex, options, optionType }) => {
         })
     }
 
-    console.log(answers);
+    // console.log(answers);
+
 
     return (
+
         <div className={styles.optionTable}>
             <table>
                 <tbody>
