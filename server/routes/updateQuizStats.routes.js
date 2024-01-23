@@ -7,7 +7,8 @@ const userModelRef = require('../models/user.model')
 router.post('/updateQuizStats/:uid/:qid', async (req, res) => {
     const userId = req.params.uid;
     const quizId = req.params.qid;
-    const { userAnswers } = req.body;
+    console.log(req.body);
+    const userAnswers = req.body;
 
 
     try {
@@ -24,34 +25,33 @@ router.post('/updateQuizStats/:uid/:qid', async (req, res) => {
             return res.status(404).send({ message: '[Mongo] Quiz not found' });
         }
 
-        console.log('Someone attempted: ',userDoc.quizzesMade[quiz].title);
+        console.log('Someone attempted: ', userDoc.quizzesMade[quiz].title);
         console.log('attempting to update records...')
+        console.log(userAnswers);
 
         // Update the quiz
-        try{
-            userDoc.quizzesMade[quiz].questions.forEach((question, index) => {
-                const userAnswered = userAnswers[index];
-                console.log('index: ',index);
-                
-                if(userAnswered){
-                    console.log('userAnswer: ',userAnswered);
-                    question.attempts += 1;
-                    if(userAnswered.isCorrect)
-                        question.answeredCorrect +=1 ;
-                    else
-                        question.answeredIncorrect += 1;
-                }
-    
-            });
-        }
-        catch(err){
-            console.log(err);
-        }
+
+        try{userDoc.quizzesMade[quiz].questions.forEach((question, index) => {
+            const userAnswered = userAnswers[index];
+            console.log('index: ', index);
+
+            if (userAnswered) {
+                console.log('userAnswer: ', userAnswered);
+                question.attempts += 1;
+                if (userAnswered.isCorrect)
+                    question.answeredCorrect += 1;
+                else
+                    question.answeredIncorrect += 1;
+            }
+
+        })}catch(err){console.log(err)}
+
 
         console.log('quiz updated successfully');
 
         await userDoc.save();
 
+        console.log('should have saved');
 
         res.status(200).send({ message: '[Mongo] OK' });
 

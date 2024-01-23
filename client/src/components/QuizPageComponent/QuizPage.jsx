@@ -59,7 +59,8 @@ const QuizPage = () => {
 
     const sendData = () => {
         // Sending Data to Server
-        axios.post(`http://localhost:4000/FET/updateQuizStats/${uid}/${qid}`, answers)
+        const userAnswers = answers.map(answer => answer || null);
+        axios.post(`http://localhost:4000/FET/updateQuizStats/${uid}/${qid}`, userAnswers)
             .then(response => {
                 console.log(response);
             })
