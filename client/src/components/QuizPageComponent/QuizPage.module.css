@@ -296,19 +296,21 @@
 
     .questionText {
         font-size: 1.5rem;
+        margin-top: 1svh;
+        margin-bottom: 7svh;
     }
 
     .indexTimer {
         font-size: 1.5rem;
         justify-content: center;
         gap: 48svw;
-        margin-top: 5svh;
+        margin-top: 2.5svh;
     }
 
     .optionTable tbody {
         display: flex;
         flex-direction: column;
-        margin-top: 15svh;
+        margin-top: 22svh;
         margin-bottom: 0svh;
     }
 
@@ -320,16 +322,29 @@
 
     .optionColBtn {
         width: 80svw;
-        height: 10svh;
-        margin: 2.5svh;
+        height: 17svh;
+        margin: 1svh;
         font-size: 1.25rem;
+    }
+    .optionColBtn img {
+        height: 100%;
+        width: 100%;   
+    }
+
+    .textImgURL img {
+        width: 40svw;
+        height: 10svh;
     }
 
     .nextBtn {
-        margin-top: 12svh;
+        margin-top: 20svh;
         width: 60svw;
         height: 7svh;
         flex-shrink: 0;
         font-size: 1.25rem;
+    }
+
+    .pollEnding {
+        font-size: 3rem;
     }
 }

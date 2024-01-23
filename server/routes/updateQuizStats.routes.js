@@ -51,11 +51,13 @@ router.post('/updateQuizStats/:uid/:qid', async (req, res) => {
 
                 userDoc.quizzesMade[quiz].questions.forEach(async (question, index) => {
                     const userAnswered = userAnswers[index];
-                    
-                    const selectedOption = question.options.find(option => option._id.toString() === userAnswered._id);
-                    if (selectedOption) {
-                        console.log('selected option found...');
-                        selectedOption.opted = parseInt(selectedOption.opted) + 1;
+
+                    if (userAnswered) {
+                        const selectedOption = question.options.find(option => option._id.toString() === userAnswered._id);
+                        if (selectedOption) {
+                            console.log('selected option found...');
+                            selectedOption.opted = parseInt(selectedOption.opted) + 1;
+                        }
                     }
                 });
             }
