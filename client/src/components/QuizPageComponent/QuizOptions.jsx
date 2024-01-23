@@ -43,10 +43,10 @@ const QuizOptions = ({ numQuestions, currentQuestionIndex, options, optionType, 
                                         ) : optionType === 'ImgURL' ? (
                                             <img src={options[0].optionImg} alt='' />
                                         ) : (
-                                            <>
+                                            <div className={styles.textImgURL}>
                                                 {options[0].optionText}
                                                 <img src={options[0].optionImg} alt='' />
-                                            </>
+                                            </div>
                                         )
                                     }
                                 </button>
@@ -64,10 +64,10 @@ const QuizOptions = ({ numQuestions, currentQuestionIndex, options, optionType, 
                                         ) : optionType === 'ImgURL' ? (
                                             <img src={options[1].optionImg} alt='' />
                                         ) : (
-                                            <>
+                                            <div className={styles.textImgURL}>
                                                 {options[1].optionText}
                                                 <img src={options[1].optionImg} alt='' />
-                                            </>
+                                            </div>
                                         )
                                     }
                                 </button>
@@ -87,10 +87,10 @@ const QuizOptions = ({ numQuestions, currentQuestionIndex, options, optionType, 
                                         ) : optionType === 'ImgURL' ? (
                                             <img src={options[2].optionImg} alt='' />
                                         ) : (
-                                            <>
+                                            <div className={styles.textImgURL}>
                                                 {options[2].optionText}
                                                 <img src={options[2].optionImg} alt='' />
-                                            </>
+                                            </div>
                                         )
                                     }
                                 </button>
@@ -108,10 +108,10 @@ const QuizOptions = ({ numQuestions, currentQuestionIndex, options, optionType, 
                                         ) : optionType === 'ImgURL' ? (
                                             <img src={options[3].optionImg} alt='' />
                                         ) : (
-                                            <>
+                                            <div className={styles.textImgURL}>
                                                 {options[3].optionText}
                                                 <img src={options[3].optionImg} alt='' />
-                                            </>
+                                            </div>
                                         )
                                     }
                                 </button>

@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 const OptionSchema = new Schema({
   optionText: String,
   optionImg: String,
-  isCorrect: Boolean
+  isCorrect: Boolean,
+  opted: Number
 });
 
 const QuestionSchema = new Schema({

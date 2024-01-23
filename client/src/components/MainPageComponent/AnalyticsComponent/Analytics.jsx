@@ -167,13 +167,15 @@ const Analytics = () => {
         oid: 0,
         optionText: '',
         optionImg: '',
-        isCorrect: false
+        isCorrect: false,
+        opted:0
       },
       {
         oid: 1,
         optionText: '',
         optionImg: '',
-        isCorrect: false
+        isCorrect: false,
+        opted:0
       }
     ],
     attempts: 0,
@@ -193,13 +195,15 @@ const Analytics = () => {
           oid: 1,
           optionText: '',
           optionImg: '',
-          isCorrect: false
+          isCorrect: false,
+          opted:0
         },
         {
           oid: 2,
           optionText: '',
           optionImg: '',
-          isCorrect: false
+          isCorrect: false,
+          opted:0
         }
       ],
       attempts: 0,
@@ -222,7 +226,8 @@ const Analytics = () => {
       oid: Math.floor(Math.random() * (max - min) + min),
       optionText: '',
       optionImg: '',
-      isCorrect: false
+      isCorrect: false,
+      opted:0
     }]
 
     // Create a new questions array with the updated options
@@ -326,13 +331,15 @@ const Analytics = () => {
           oid: 0,
           optionText: '',
           optionImg: '',
-          isCorrect: false
+          isCorrect: false,
+          opted:0
         },
         {
           oid: 1,
           optionText: '',
           optionImg: '',
-          isCorrect: false
+          isCorrect: false,
+          opted:0
         }
       ],
       attempts: 0,
@@ -384,9 +391,9 @@ const Analytics = () => {
   }, [isOpen]);
 
   // Creating a useEffect to listen for changes to userContext
-  useEffect(() => {
-    console.log('User after update:', user);
-  }, [user]);
+  // useEffect(() => {
+  //   console.log('User after update:', user);
+  // }, [user]);
 
   // Function to delete quiz from db  | unstable function cause of react-toastify issue
   const delQuiz = async () => {

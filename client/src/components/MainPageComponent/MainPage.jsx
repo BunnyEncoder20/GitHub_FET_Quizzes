@@ -96,7 +96,9 @@ const MainPage = () => {
     let monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
     // creating a quiz object to add to quizArray
-    const newQuiz = {
+    let newQuiz = {}
+
+    newQuiz = {
       quizId: generatedQuizId,
       impressions: 0,
       shareLink: `http://localhost:3000/quiztime/${jwtDecode(user.token).userId}/${generatedQuizId}`,
@@ -105,6 +107,7 @@ const MainPage = () => {
       quizType: activeType,
       questions: questionsArray
     }
+
 
     // Make a POST request to the server
     axios.post(`http://localhost:4000/FET/createQuiz/${jwtDecode(user.token).userId}`, newQuiz)
@@ -147,13 +150,15 @@ const MainPage = () => {
         oid: 0,
         optionText: '',
         optionImg: '',
-        isCorrect: false
+        isCorrect: false,
+        opted: 0
       },
       {
         oid: 1,
         optionText: '',
         optionImg: '',
-        isCorrect: false
+        isCorrect: false,
+        opted: 0
       }
     ],
     attempts: 0,
@@ -173,13 +178,15 @@ const MainPage = () => {
           oid: 1,
           optionText: '',
           optionImg: '',
-          isCorrect: false
+          isCorrect: false,
+          opted: 0
         },
         {
           oid: 2,
           optionText: '',
           optionImg: '',
-          isCorrect: false
+          isCorrect: false,
+          opted: 0
         }
       ],
       attempts: 0,
@@ -202,7 +209,8 @@ const MainPage = () => {
       oid: Math.floor(Math.random() * (max - min) + min),
       optionText: '',
       optionImg: '',
-      isCorrect: false
+      isCorrect: false,
+      opted: 0
     }]
 
     // Create a new questions array with the updated options
@@ -423,7 +431,7 @@ const MainPage = () => {
             </div>
             <div className={styles.btnContainer}>
               <span>
-                <button className={styles.submissionBtn} onClick={() => {setShowModal(false); resetInitialModal()}}>
+                <button className={styles.submissionBtn} onClick={() => { setShowModal(false); resetInitialModal() }}>
                   Cancel
                 </button>
               </span>
@@ -533,8 +541,8 @@ const MainPage = () => {
 
             </div>
             <div className={styles.createSubmitBtnContainer}>
-              <button type='button' className={styles.createCancel} onClick={() => { setShowCreateQuizForm(false);resetMainModal() }}>Cancel</button>
-              <button type='Submit' className={styles.createSubmit} onClick={() => { setShowCreateQuizForm(false); handleSecondSubmit() }}>Create Quiz</button>
+              <button type='button' className={styles.createCancel} onClick={() => { setShowCreateQuizForm(false); resetMainModal() }}>Cancel</button>
+              <button type='Submit' className={styles.createSubmit} onClick={() => { setShowCreateQuizForm(false); handleSecondSubmit() }}>{activeType === 'q&a' ? 'Create Quiz' : 'Create Poll'}</button>
             </div>
           </form>
         </dialog>

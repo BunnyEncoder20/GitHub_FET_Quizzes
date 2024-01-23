@@ -175,14 +175,15 @@
 }
 
 .optionColBtn {
-    padding: 0px;
-    width: 320px;
-    height: 112px;
+    padding: 10px;
+    width: 400px;
+    height: 170px;
     flex-shrink: 0;
     border-radius: 10px;
     background: #F0F0F0;
-    margin: 50px 70px;
+    margin: 10px 40px;
     border: none;
+    overflow: hidden;
 
     color: #000;
     font-family: 'Poppins', sans-serif;
@@ -225,4 +226,31 @@
 
 .finalScore {
     color: #60B84B;
+}
+
+.textImgURL {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.textImgURL img {
+    height: 150px;
+    width: 180px;
+    border-radius: 10px;
+}
+
+.pollEnding {
+    width: 824px;
+    color: #474444;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 74px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+
+    margin-top: 130px;
+    text-align: center;
 }

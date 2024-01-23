@@ -7,9 +7,8 @@ const userModelRef = require('../models/user.model')
 router.post('/updateQuizStats/:uid/:qid', async (req, res) => {
     const userId = req.params.uid;
     const quizId = req.params.qid;
-    console.log(req.body);
-    const userAnswers = req.body;
 
+    const { userAnswers, isPoll } = req.body;
 
     try {
         // Check if the quiz exists
@@ -27,24 +26,41 @@ router.post('/updateQuizStats/:uid/:qid', async (req, res) => {
 
         console.log('Someone attempted: ', userDoc.quizzesMade[quiz].title);
         console.log('attempting to update records...')
-        console.log(userAnswers);
+
 
         // Update the quiz
+        if (!isPoll) {
+            console.log('q&a quiz sent...')
+            userDoc.quizzesMade[quiz].questions.forEach((question, index) => {
+                const userAnswered = userAnswers[index];
 
-        try{userDoc.quizzesMade[quiz].questions.forEach((question, index) => {
-            const userAnswered = userAnswers[index];
-            console.log('index: ', index);
 
-            if (userAnswered) {
-                console.log('userAnswer: ', userAnswered);
-                question.attempts += 1;
-                if (userAnswered.isCorrect)
-                    question.answeredCorrect += 1;
-                else
-                    question.answeredIncorrect += 1;
+                if (userAnswered) {
+
+                    question.attempts += 1;
+                    if (userAnswered.isCorrect)
+                        question.answeredCorrect += 1;
+                    else
+                        question.answeredIncorrect += 1;
+                }
+            })
+        }
+        else {
+            try {
+                console.log('poll sent...')
+
+                userDoc.quizzesMade[quiz].questions.forEach(async (question, index) => {
+                    const userAnswered = userAnswers[index];
+                    
+                    const selectedOption = question.options.find(option => option._id.toString() === userAnswered._id);
+                    if (selectedOption) {
+                        console.log('selected option found...');
+                        selectedOption.opted += 1;
+                    }
+                });
             }
-
-        })}catch(err){console.log(err)}
+            catch (err) { console.log(err); }
+        }
 
 
         console.log('quiz updated successfully');

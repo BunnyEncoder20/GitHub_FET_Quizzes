@@ -60,13 +60,27 @@ const QuizPage = () => {
     const sendData = () => {
         // Sending Data to Server
         const userAnswers = answers.map(answer => answer || null);
-        axios.post(`http://localhost:4000/FET/updateQuizStats/${uid}/${qid}`, userAnswers)
-            .then(response => {
-                console.log(response);
-            })
-            .catch(err => {
-                console.log("ERROR: ", err)
-            })
+
+        if (quiz.quizType === 'q&a') {
+            let data = {userAnswers:answers,isPoll:false}
+            axios.post(`http://localhost:4000/FET/updateQuizStats/${uid}/${qid}`, data)
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(err => {
+                    console.log("ERROR: ", err)
+                })
+        }
+        else {
+            let data = {userAnswers:answers,isPoll:true}
+            axios.post(`http://localhost:4000/FET/updateQuizStats/${uid}/${qid}`, data)
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(err => {
+                    console.log("ERROR: ", err)
+                })
+        }
     }
 
     return (
@@ -84,16 +98,22 @@ const QuizPage = () => {
                         </div>
                     </div>
                 ) : currentQuestionIndex >= quiz.questions.length ? (
-                    <>
-                        <Confetti width='1107px' height='680px' tweenDuration={5000} />
-                        <div className={styles.endContainer}>
-                            <div className={styles.endPage}>
-                                <div>Congrats Quiz is completed</div>
-                                <img src={EndingImg} alt="" width={320} height={323} />
-                                <div>Your Score is <span className={styles.finalScore}>0{getResults()}/0{quiz.questions.length}</span></div>
+                    quiz.quizType === 'q&a' ? (
+                        <>
+                            <Confetti width='1107px' height='680px' tweenDuration={5000} />
+                            <div className={styles.endContainer}>
+                                <div className={styles.endPage}>
+                                    <div>Congrats Quiz is completed</div>
+                                    <img src={EndingImg} alt="" width={320} height={323} />
+                                    <div>Your Score is <span className={styles.finalScore}>0{getResults()}/0{quiz.questions.length}</span></div>
+                                </div>
                             </div>
-                        </div>
-                    </>
+                        </>
+                    ) : (
+                        quiz.quizType === 'poll' && (
+                            <div className={styles.pollEnding}>Thank you for participating in the Poll <br /> 🙏</div>
+                        )
+                    )
 
                 ) : (
                     <div className={styles.questionBoxContainer}>
@@ -108,7 +128,7 @@ const QuizPage = () => {
                             <QuizOptions numQuestions={quiz.questions.length} currentQuestionIndex={currentQuestionIndex} options={quiz.questions[currentQuestionIndex].options} optionType={quiz.questions[currentQuestionIndex].optionsType} callBack={handleAnswersFromChild} />
 
                             <button
-                                onClick={currentQuestionIndex === quiz.questions.length - 1 ? ()=>{nextQuestion();sendData()} : () => nextQuestion()}
+                                onClick={currentQuestionIndex === quiz.questions.length - 1 ? () => { nextQuestion(); sendData() } : () => nextQuestion()}
                                 className={styles.nextBtn}>
                                 {currentQuestionIndex === quiz.questions.length - 1 ? 'Submit' : 'Next'}
                             </button>
