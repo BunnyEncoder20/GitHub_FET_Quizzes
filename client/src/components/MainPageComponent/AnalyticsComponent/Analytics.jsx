@@ -464,7 +464,7 @@ const Analytics = () => {
               </div>
             </div>
 
-            {/* Main Creating Quiz Modal */}
+            {/* Main Edit Quiz Modal */}
             <dialog ref={createDialogRef} className={styles.mainCreateModal}>
               <form method='dialog' ref={mainFormRef}>
 
@@ -589,7 +589,7 @@ const Analytics = () => {
           <h1 className={styles.shareHeading}>Congrats your Quiz is Published!</h1>
           <input type="text" value={shareLink} className={styles.shareLinkInput} readOnly />
           <button type="submit"
-            onClick={() => { setShowFinalModal(false); copyToClipboard(); resetMainModal(); }}
+            onClick={() => { setShowFinalModal(false); copyToClipboard(shareLink); resetMainModal(); }}
             className={styles.modalShareBtn}>
             Share
           </button>

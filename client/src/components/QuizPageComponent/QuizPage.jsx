@@ -9,6 +9,9 @@ import EndingImg from '../../assets/quizEnd.png'
 // for the confetti animation
 import Confetti from 'react-confetti'
 
+// Importing Timer Comp
+import Timer from '../../utils/Timer.js'
+
 const QuizPage = ({ match }) => {
 
     // Getting params from react-router-dom
@@ -63,7 +66,7 @@ const QuizPage = ({ match }) => {
                             <div className={styles.endPage}>
                                 <div>Congrats Quiz is completed</div>
                                 <img src={EndingImg} alt="" width={320} height={323} />
-                                <div>Your Score is <span className={styles.finalScore}>{`03/${quiz.questions.length}`}</span></div>
+                                <div>Your Score is <span className={styles.finalScore}>{`03/0${quiz.questions.length}`}</span></div>
                             </div>
                         </div>
                     </>
@@ -73,7 +76,7 @@ const QuizPage = ({ match }) => {
                         <div className={styles.questionBox}>
                             <div className={styles.indexTimer}>
                                 <span className={styles.index}> 0{currentQuestionIndex + 1} / 0{quiz.questions.length}</span>
-                                {/* {timer > 0 && <span className={styles.timer}>Timer : {`00:${timer}s`}</span>} */}
+                                { quiz.questions[currentQuestionIndex].isTimed > 0 ? (<span className={styles.timer}><Timer duration={quiz.questions[currentQuestionIndex].isTimed} onTimeEnd={nextQuestion} /></span>): <span>&emsp;&emsp;&emsp;</span>}
                             </div>
 
                             <div className={styles.questionText}>{quiz.questions[currentQuestionIndex].questionText}</div>
