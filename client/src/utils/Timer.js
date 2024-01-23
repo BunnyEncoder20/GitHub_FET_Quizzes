@@ -23,7 +23,7 @@ const Timer = ({ duration, onTimeEnd }) => {
 
     const formatTime = (time) => {
         const seconds = time % 60;
-        return `00:${seconds < 10 ? '0' : ''}${seconds}`;
+        return `00:${seconds < 10 ? '0' : ''}${seconds}s`;
     }
 
     return (

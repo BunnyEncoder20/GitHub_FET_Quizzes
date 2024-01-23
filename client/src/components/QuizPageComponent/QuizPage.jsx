@@ -97,10 +97,10 @@ const QuizPage = ({ match }) => {
                             </div>
 
                             <button
-                                onClick={() => { nextQuestion(); }}
+                                onClick={() => { nextQuestion(); console.log('index:',currentQuestionIndex); console.log('length : ',quiz.questions.length); }}
                                 className={styles.nextBtn}
                             >
-                                Next
+                                {currentQuestionIndex === quiz.questions.length-1 ? 'Submit' : 'Next'}
                             </button>
                         </div>
                     </div>
