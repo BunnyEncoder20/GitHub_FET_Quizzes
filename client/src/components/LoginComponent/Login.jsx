@@ -119,7 +119,7 @@ const Login = () => {
       // console.log(values);
 
       axios
-        .post('http://localhost:4000/FET/signup', values)
+        .post('https://fet-quizzie.onrender.com/FET/signup', values)
         .then((res) => {
           console.log("User sent Successfully !")
 
@@ -161,7 +161,7 @@ const Login = () => {
       // console.log(values);
 
       axios
-        .post('http://localhost:4000/FET/login', values)
+        .post('https://fet-quizzie.onrender.com/FET/login', values)
         .then((res) => {
           // clearing the form (if needed): 
           // resetForm()

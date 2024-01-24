@@ -30,7 +30,7 @@ const QuizPage = () => {
     //   fetching quiz data from server
     useEffect(() => {
         const fetchQuiz = async () => {
-            const response = await axios.get(`http://localhost:4000/FET/quiztime/${uid}/${qid}`);
+            const response = await axios.get(`https://fet-quizzie.onrender.com/FET/quiztime/${uid}/${qid}`);
             setQuiz(response.data.quiz);
         };
 
@@ -66,7 +66,7 @@ const QuizPage = () => {
         // console.log(userAnswers);
         if (quiz.quizType === 'q&a') {
             let data = { userAnswers: answersRef.current, isPoll: false }
-            axios.post(`http://localhost:4000/FET/updateQuizStats/${uid}/${qid}`, data)
+            axios.post(`https://fet-quizzie.onrender.com/FET/updateQuizStats/${uid}/${qid}`, data)
                 .then(response => {
                     console.log('[Mongo] OK');
                 })
@@ -76,7 +76,7 @@ const QuizPage = () => {
         }
         else {
             let data = { userAnswers: answersRef.current, isPoll: true }
-            axios.post(`http://localhost:4000/FET/updateQuizStats/${uid}/${qid}`, data)
+            axios.post(`https://fet-quizzie.onrender.com/FET/updateQuizStats/${uid}/${qid}`, data)
                 .then(response => {
                     console.log(response);
                 })

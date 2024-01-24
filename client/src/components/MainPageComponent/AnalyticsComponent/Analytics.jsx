@@ -114,7 +114,7 @@ const Analytics = () => {
     }
 
     // Make a POST request to the server
-    axios.post(`http://localhost:4000/FET/updateQuiz/${jwtDecode(user.token).userId}/${activeQuiz.quizId}`, updatedQuiz)
+    axios.post(`https://fet-quizzie.onrender.com/FET/updateQuiz/${jwtDecode(user.token).userId}/${activeQuiz.quizId}`, updatedQuiz)
       .then(response => {
         console.log(response.data.message);
       })
@@ -400,7 +400,7 @@ const Analytics = () => {
     try {
       // replace 'quizId' with the id of the quiz you want to delete
       console.log('sending delete request now...');
-      const response = await axios.delete(`http://localhost:4000/FET/deleteQuiz/${jwtDecode(user.token).userId}/${isOpen.quiz}`);
+      const response = await axios.delete(`https://fet-quizzie.onrender.com/FET/deleteQuiz/${jwtDecode(user.token).userId}/${isOpen.quiz}`);
       console.log("FrontEnd response : ", response);
 
       if (response.status === 200) {

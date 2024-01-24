@@ -110,7 +110,7 @@ const MainPage = () => {
 
 
     // Make a POST request to the server
-    axios.post(`http://localhost:4000/FET/createQuiz/${jwtDecode(user.token).userId}`, newQuiz)
+    axios.post(`https://fet-quizzie.onrender.com/FET/createQuiz/${jwtDecode(user.token).userId}`, newQuiz)
       .then(response => {
         console.log(response.data.message);
       })
