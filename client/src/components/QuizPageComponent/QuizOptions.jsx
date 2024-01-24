@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext  } from 'react'
 
 // Importing Styles 
 import styles from './QuizPage.module.css';
+
 
 
 const QuizOptions = ({ numQuestions, currentQuestionIndex, options, optionType, callBack }) => {
@@ -9,10 +10,10 @@ const QuizOptions = ({ numQuestions, currentQuestionIndex, options, optionType, 
     const [answers, setAnswers] = useState([]);
 
     useEffect(() => {
-        if(answers.length+1 === numQuestions) {
+        if(answers.length === numQuestions) {
             callBack(answers);
         }
-    }, [answers,numQuestions,callBack]);
+    }, [answers,numQuestions]);
 
     const handleAnswer = (optionIndex) => {
         setAnswers(prev => {

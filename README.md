@@ -55,7 +55,7 @@ npm i react-confetti
 - recommended to define the height and width of the confetti (defaults to initial window dimensions). Import the Confetti from 'react-confetti' and place teh </Confetti height={} width={}> component in your component.
 - Read more about it , pretty easy doc to understand : [website](https://www.npmjs.com/package/react-confetti)
 
-7. REact Cookie for universal cookie management
+7. React Cookie for universal cookie management
 ```
 npm i react-cookie
 ```
@@ -370,4 +370,45 @@ console.log(decoded);
         console.error('Could not copy text: ', err);
       });
   }
+```
+
+---
+
+### UseRef 
+
+- useful when you want to store data from child element callbacks without causing re-rendering on entire parent element
+- Eg: 
+```javascript
+import React,{useRef} from 'react';
+
+// inside the parent component : 
+const answersRef = useRef([]);
+
+const handleAnswersFromChild = (answersFromChild) => {
+      console.log('answersFromChild came',answersFromChild);
+      answersRef.current = answersFromChild;  
+    }
+
+const getResults = () => {
+      let score = 0;
+      answersRef.current.forEach(answer => {
+          if (answer && answer.isCorrect)
+              score += 1;
+      });
+
+      return score;
+    }
+```
+- The ref is usable across functions and doesn't cause re-renders when read or written.
+```javascript
+// inside child component 
+const QuizOptions = ({ numQuestions, currentQuestionIndex, options, optionType, callBack }) => {
+  const [answers, setAnswers] = useState([]);
+
+    useEffect(() => {
+        if(answers.length === numQuestions) {
+            callBack(answers);
+        }
+    }, [answers,numQuestions]);
+}
 ```

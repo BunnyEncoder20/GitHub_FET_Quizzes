@@ -16,6 +16,7 @@ import PrivateRoutes from './utils/Private.routes'
 // Importing context providers 
 import { UserContextProvider } from './context/UserContext'
 
+
 function App() {
   return (
     <UserContextProvider>
@@ -24,12 +25,17 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Login />} />
-            <Route path="/quiztime/:uid/:qid" element={<QuizPage />} />
             {/* Private Routes */}
             <Route element={<PrivateRoutes />}>
-              <Route path='/mainpage' element={<MainPage />}  />
+              <Route path='/mainpage' element={<MainPage />} />
             </Route>
-            
+
+            {/* Taking Quiz Components */}
+            <Route path="/quiztime/:uid/:qid" element={
+              
+                <QuizPage />
+              
+            } />
           </Routes>
         </BrowserRouter>
       </div>

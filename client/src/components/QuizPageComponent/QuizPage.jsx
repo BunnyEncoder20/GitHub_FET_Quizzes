@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
@@ -13,15 +13,17 @@ import Confetti from 'react-confetti'
 import Timer from '../../utils/Timer.js'
 import QuizOptions from './QuizOptions.jsx'
 
+
 const QuizPage = () => {
 
     // Getting params from react-router-dom
     const { uid, qid } = useParams();
 
-    // states 
+    // states & Ref
     const [quiz, setQuiz] = useState({});
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(-1);
-    const [answers, setAnswers] = useState([]);
+    // const [answers, setAnswers] = useState([]);
+    const answersRef = useRef([]);
 
 
 
@@ -44,12 +46,13 @@ const QuizPage = () => {
     };
 
     const handleAnswersFromChild = (answersFromChild) => {
-        setAnswers(answersFromChild);
+        console.log('answersFromChild came',answersFromChild);
+        answersRef.current = answersFromChild;  
     }
 
     const getResults = () => {
         let score = 0;
-        answers.forEach(answer => {
+        answersRef.current.forEach(answer => {
             if (answer && answer.isCorrect)
                 score += 1;
         });
@@ -59,10 +62,10 @@ const QuizPage = () => {
 
     const sendData = () => {
         // Sending Data to Server
-        const userAnswers = answers.map(answer => answer || null);
-
+        const userAnswers = answersRef.current.map(answer => answer || null);
+        // console.log(userAnswers);
         if (quiz.quizType === 'q&a') {
-            let data = { userAnswers: answers, isPoll: false }
+            let data = { userAnswers: answersRef.current, isPoll: false }
             axios.post(`http://localhost:4000/FET/updateQuizStats/${uid}/${qid}`, data)
                 .then(response => {
                     console.log('[Mongo] OK');
@@ -72,7 +75,7 @@ const QuizPage = () => {
                 })
         }
         else {
-            let data = { userAnswers: answers, isPoll: true }
+            let data = { userAnswers: answersRef.current, isPoll: true }
             axios.post(`http://localhost:4000/FET/updateQuizStats/${uid}/${qid}`, data)
                 .then(response => {
                     console.log(response);
@@ -102,8 +105,9 @@ const QuizPage = () => {
                 ) : currentQuestionIndex >= quiz.questions.length ? (
                     quiz.quizType === 'q&a' ? (
                         <>
-                            {window.innerWidth>=450 ? <Confetti width='1107px' height='680px' tweenDuration={5000} /> : <Confetti width='450px' height='700px' tweenDuration={5000} numberOfPieces={100} />}
                             
+                            {window.innerWidth >= 450 ? <Confetti width='1107px' height='680px' tweenDuration={5000} /> : <Confetti width='450px' height='700px' tweenDuration={5000} numberOfPieces={100} />}
+
                             <div className={styles.endContainer}>
                                 <div className={styles.endPage}>
                                     <div>Congrats Quiz is completed</div>
@@ -114,7 +118,10 @@ const QuizPage = () => {
                         </>
                     ) : (
                         quiz.quizType === 'poll' && (
-                            <div className={styles.pollEnding}>Thank you for participating in the Poll <br /> 🙏</div>
+                            <div className={styles.pollEnding}>
+                                
+                                Thank you for participating in the Poll <br /> 🙏
+                            </div>
                         )
                     )
 
