@@ -101,7 +101,7 @@ const MainPage = () => {
     newQuiz = {
       quizId: generatedQuizId,
       impressions: 0,
-      shareLink: `http://localhost:3000/quiztime/${jwtDecode(user.token).userId}/${generatedQuizId}`,
+      shareLink: `https://fet-quizzes-client.vercel.app/quiztime/${jwtDecode(user.token).userId}/${generatedQuizId}`,
       title: title,
       createdOn: dateObject.getDate() + ' ' + monthNames[dateObject.getMonth()] + ', ' + dateObject.getFullYear(),
       quizType: activeType,
