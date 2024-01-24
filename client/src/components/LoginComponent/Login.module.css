@@ -39,6 +39,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    width: 900px;
 }
 
 .errorLabels {
@@ -48,8 +49,8 @@
     font-style: normal;
     font-weight: 500;
     line-height: normal;
-    text-align: left;
-    width: 300px;
+    text-align: center;
+    position: absolute;
 }
 
 .btn_container {
@@ -61,7 +62,7 @@
 }
 
 .btn {
-    width: 150px;
+    width: 217px;
     height: 37px;
     flex-shrink: 0;
     border-radius: 10px;
@@ -97,6 +98,7 @@
     flex-shrink: 0;
     border-radius: 8px;
     background: #A9BCFF;
+    border: none;
 
     color: #474444;
     font-family: 'Poppins', sans-serif;

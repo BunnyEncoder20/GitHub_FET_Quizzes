@@ -169,7 +169,7 @@ const Login = () => {
           if (res.data.status) {
             loginNotify(true, res.data)    // calling function for successful login
 
-            
+
 
             // setting user context
             setUser({
@@ -216,6 +216,7 @@ const Login = () => {
           <button className={activeForm === 'login' ? `${styles.btn} ${styles.active}` : `${styles.btn} ${styles.inactive}`} onClick={() => setActiveForm('login')}>Log In</button>
         </div>
 
+        {/* Register Form */}
         {
           activeForm === 'signup' && (
 
@@ -235,7 +236,7 @@ const Login = () => {
                         onBlur={registerFormik.handleBlur}
                       />
                     </td>
-                    {registerFormik.touched.name && registerFormik.errors.name ? <td className={styles.errorLabels}>{registerFormik.errors.name}</td> : null}
+                    {registerFormik.touched.name && registerFormik.errors.name ? <span className={styles.errorLabels}>{registerFormik.errors.name}</span> : null}
                   </tr>
                   <tr className={styles.row}>
                     <td className={styles.col}>
@@ -250,7 +251,7 @@ const Login = () => {
                         onBlur={registerFormik.handleBlur}
                       />
                     </td>
-                    {registerFormik.touched.email && registerFormik.errors.email ? <td className={styles.errorLabels}>{registerFormik.errors.email}</td> : null}
+                    {registerFormik.touched.email && registerFormik.errors.email ? <span className={styles.errorLabels}>{registerFormik.errors.email}</span> : null}
                   </tr>
                   <tr className={styles.row}>
                     <td className={styles.col}>
@@ -265,7 +266,7 @@ const Login = () => {
                         onBlur={registerFormik.handleBlur}
                       />
                     </td>
-                    {registerFormik.touched.password && registerFormik.errors.password ? <td className={styles.errorLabels}>{registerFormik.errors.password}</td> : null}
+                    {registerFormik.touched.password && registerFormik.errors.password ? <span className={styles.errorLabels}>{registerFormik.errors.password}</span> : null}
                   </tr>
                   <tr className={styles.row}>
                     <td className={styles.col}>
@@ -280,7 +281,7 @@ const Login = () => {
                         onBlur={registerFormik.handleBlur}
                       />
                     </td>
-                    {registerFormik.touched.confirmPassword && registerFormik.errors.confirmPassword ? <td className={styles.errorLabels}>{registerFormik.errors.confirmPassword}</td> : null}
+                    {registerFormik.touched.confirmPassword && registerFormik.errors.confirmPassword ? <span className={styles.errorLabels}>{registerFormik.errors.confirmPassword}</span> : null}
                   </tr>
                   <tr className={styles.submitRow}>
                     <button type="submit" className={styles.submit_btn}>Sign-Up</button>
@@ -291,6 +292,7 @@ const Login = () => {
           )
         }
 
+        {/* Login Form */}
         {
           activeForm === 'login' && (
             <form onSubmit={loginFormik.handleSubmit} className={styles.container}>
