@@ -48,6 +48,9 @@
     margin-bottom: 40px;
     cursor: pointer;
 
+    width: 171px;
+    height: 46px;
+
     color: #474444;
     border: none;
     border-radius: 10px;
@@ -72,7 +75,7 @@
 .navbar hr {
     width: 100%;
     border: 0;
-    border-top: 5px solid #000;
+    border-top: 1px solid #000;
     /* margin-bottom: -60px; */
 }
 
@@ -123,15 +126,16 @@
     border-radius: 10px;
     background: #FFF;
     box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.5);
+    padding: 0px 20px;
 
     color: #9F9F9F;
-    text-align: center;
+    text-align: left;
     font-family: 'Poppins', sans-serif;
     font-size: 25px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
-    margin-bottom: 20px;
+    margin-bottom: -30px;
     border: none;
 }
 
@@ -195,7 +199,7 @@
     width: 845px;
     height: 671px;
     flex-shrink: 0;
-    border-radius: 50px;
+    border-radius: 10px;
     background: #FFF;
     filter: drop-shadow(0px 0px 10px rgba(255, 255, 255, 0.5));
     padding: 20px;
@@ -502,7 +506,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    
+
 }
 
 .shareHeading {
@@ -541,7 +545,7 @@
     border-radius: 10px;
     background: #60B84B;
     color: #FFF;
-    font-family:'Poppins', sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 21px;
     font-style: normal;
     font-weight: 600;

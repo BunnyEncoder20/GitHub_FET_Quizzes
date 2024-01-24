@@ -72,6 +72,9 @@ const MainPage = () => {
   // making a state for storing the name of quiz  
   const [title, setTitle] = useState('')
 
+  // State for active question
+  const activeQuestion = useRef(0)
+
   // state for holding the shareLink of created quiz
   const [shareLink, setShareLink] = useState('');
 
@@ -451,7 +454,7 @@ const MainPage = () => {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
               <span className={styles.qBtnContainer}>
                 {questionsArray.map((question, index) => (
-                  <button key={question.qid} type='button' className={styles.qBtn}>Q{index + 1} {question.qid !== 0 && <img src={crossIcon} className={styles.cross} alt='' onClick={() => removeQuestion(question.qid)} />} </button>
+                  <button onClick={activeQuestion.current = index} key={question.qid} type='button' className={styles.qBtn}>Q{index + 1} {question.qid !== 0 && <img src={crossIcon} className={styles.cross} alt='' onClick={() => removeQuestion(question.qid)} />} </button>
                 ))}
                 <span>
                   <img src={plusIcon}
@@ -463,7 +466,7 @@ const MainPage = () => {
                     }} />
                 </span>
               </span>
-              <span className={styles.limit}>Max 5 Questions</span>
+              <span className={styles.limit}>Max 5 questions</span>
             </div>
             <div className={styles.mappedInputs} >
               {questionsArray.map((question, index) => {
@@ -473,18 +476,18 @@ const MainPage = () => {
                       <input type="text" onChange={(e) => handleQuestionsChange(e.target.value, question.qid, 'questionText')} className={styles.questionText} name="questionText" id="questionText" placeholder={activeType === 'q&a' ? 'Question Here...' : 'Poll Question here...'} />
                     </div>
                     <div className={styles.optionsTypeContainer}>
-                      <span>Options type</span>
+                      <span>Options Type</span>
                       <label className={styles.optionTypeLabels}>
                         <input type="radio" name="optionType" id="optionType" value='text' onClick={(e) => handleQuestionsChange(e.target.value, question.qid, 'optionType')} />
                         Text
                       </label>
                       <label className={styles.optionTypeLabels}>
                         <input type="radio" name="optionType" id="optionType" value='ImgURL' onClick={(e) => handleQuestionsChange(e.target.value, question.qid, 'optionType')} />
-                        ImgURL
+                        Image URL
                       </label>
                       <label className={styles.optionTypeLabels}>
                         <input type="radio" name="optionType" id="optionType" value='text&ImgURL' onClick={(e) => handleQuestionsChange(e.target.value, question.qid, 'optionType')} />
-                        Text & ImgURL
+                        Text & Image URL
                       </label>
                     </div>
                     <div>

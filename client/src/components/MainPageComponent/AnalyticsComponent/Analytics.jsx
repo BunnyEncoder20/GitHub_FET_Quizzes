@@ -490,7 +490,7 @@ const Analytics = () => {
                         }} />
                     </span>
                   </span>
-                  <span className={styles.limit}>Max 5 Questions</span>
+                  <span className={styles.limit}>Max 5 questions</span>
                 </div>
                 <div className={styles.mappedInputs} >
                   {questionsArray.map((question, index) => {
@@ -500,18 +500,18 @@ const Analytics = () => {
                           <input type="text" value={question.questionText} onChange={(e) => handleQuestionsChange(e.target.value, question.qid, 'questionText')} className={styles.questionText} name="questionText" id="questionText" placeholder={activeType === 'q&a' ? 'Question Here...' : 'Poll Question here...'} />
                         </div>
                         <div className={styles.optionsTypeContainer}>
-                          <span>Options type</span>
+                          <span>Options Type</span>
                           <label className={styles.optionTypeLabels}>
                             <input type="radio" defaultChecked={question.optionType === 'text'} name="optionType" id="optionType" value='text' onClick={(e) => handleQuestionsChange(e.target.value, question.qid, 'optionType')} />
                             Text
                           </label>
                           <label className={styles.optionTypeLabels}>
                             <input type="radio" defaultChecked={question.optionType === 'ImgURL'} name="optionType" id="optionType" value='ImgURL' onClick={(e) => handleQuestionsChange(e.target.value, question.qid, 'optionType')} />
-                            ImgURL
+                            Image URL
                           </label>
                           <label className={styles.optionTypeLabels}>
                             <input type="radio" defaultChecked={question.optionType === 'text&ImgURL'} name="optionType" id="optionType" value='text&ImgURL' onClick={(e) => handleQuestionsChange(e.target.value, question.qid, 'optionType')} />
-                            Text & ImgURL
+                            Text & Image URL
                           </label>
                         </div>
                         <div>
