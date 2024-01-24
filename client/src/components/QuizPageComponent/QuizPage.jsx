@@ -46,7 +46,7 @@ const QuizPage = () => {
     };
 
     const handleAnswersFromChild = (answersFromChild) => {
-        console.log('answersFromChild came',answersFromChild);
+        // console.log('answersFromChild came',answersFromChild);
         answersRef.current = answersFromChild;  
     }
 

@@ -295,7 +295,7 @@
     }
 
     .questionText {
-        font-size: 1.5rem;
+        font-size: 1.25rem;
         margin-top: 1svh;
         margin-bottom: 7svh;
     }
@@ -322,7 +322,7 @@
 
     .optionColBtn {
         width: 80svw;
-        height: 17svh;
+        height: 15svh;
         margin: 1svh;
         font-size: 1.25rem;
     }
@@ -346,5 +346,9 @@
 
     .pollEnding {
         font-size: 3rem;
+    }
+
+    .endPage{
+        font-size: 2rem;
     }
 }
