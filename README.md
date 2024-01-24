@@ -2,8 +2,16 @@
 ---
 
 ## General information
-Made this repo to stage the development of my Cuvette FET project 2 - Quizzes. This is a Quiz making web application where we can create, analyze and share quizzes and polls  
+Made this repo to stage the development of my Cuvette FET project 2 - Quizzie. This is a Quiz making web application where we can create, analyze and share quizzes and polls
+**Start Date: 17th January 2024**
+**End Date: 24th January 2024**
+Target Date: 29th January 2024
+![Img](./client/src/assets/Quizzie%20Web%20App.png)
+![Img](./client/src/assets/Quizzie%20Web%20App%202.png)
+![Img](./client/src/assets/Quizzie%20Web%20App%203.png)
+![Img](./client/src/assets/Quizzie%20Web%20App%204.png)
 
+---
 Ideabook [Link](https://ideabook.club/share/fa8729bb-f4bf-4fad-b759-97c1c4bbf772/)
 Figma [Link](https://www.figma.com/file/XYmWHdBvT55GOtfm9RAFCT/Quiz-Test-(Copy)?node-id=5%3A3380&mode=dev)
 Deployment [Link](https://fet-quizzes-client.vercel.app/mainpage)
@@ -12,8 +20,8 @@ Deployment [Link](https://fet-quizzes-client.vercel.app/mainpage)
 1. formik -  - [Link]('https://formik.org/')
 2. axios - for better get and post requests from client - [website]('https://axios-http.com/docs/intro')
 3. redux - for universal state management - [website]('https://redux.js.org/') 
-4. Material UI - for getting ready made components for rapid frontend development [Will not be using this for this project]
-5. Styles Components - for making using traditional CSS easier for the component age - [website](https://styled-components.com/docs) 
+4. Material UI - for getting ready made components for rapid frontend development [Will NOT be using this for this project]
+5. Styles Components - for making using CSS easier - [website](https://styled-components.com/docs) [did NOT use this either , ONLY used Vanilla CSS]
 6. React Viz - for making graphs with animations - [website]('https://uber.github.io/react-vis/documentation/getting-started/installing-react-vis')
 7. React Spring - for spring like animations - [website]('https://www.react-spring.dev/docs/getting-started')
 
