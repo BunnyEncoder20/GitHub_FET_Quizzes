@@ -64,9 +64,10 @@ const Dashboard = () => {
                 <div className={`${styles.flexbox} ${styles.qa}`}><span className={styles.bigNum}>{formatNumber(stats.numberOfQuestions)}</span> Questions Asked</div>
                 <div className={`${styles.flexbox} ${styles.imp}`}><span className={styles.bigNum}>{formatNumber(stats.impressions)}</span> Total Impressions</div>
             </div>
-            <div className={styles.heading}>Treading Quizs</div>
+            <div className={styles.heading}>Treading Quizzies</div>
             <div className={styles.quizMade}>
                 {user && user.userQuizData && user.userQuizData.map((_, i) => (
+                    user.userQuizData[i].impressions >= 100 && 
                     <div key={i} className={styles.quizBox}>
                         <div>
                             <span className={styles.quizTitle}>{user.userQuizData[i].title}</span>
