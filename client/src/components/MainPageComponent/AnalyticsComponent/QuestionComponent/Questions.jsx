@@ -41,10 +41,10 @@ const Questions = ({ quizId }) => {
                 <div className={styles.container} key={index}>
                     <h3 className={styles.questionText}>{question.questionText}</h3>
                     <div className={styles.stats}>
-                        {question.options[0] && <div className={styles.statsBox}><span className={styles.BigNum}>{question.options[0].opted}</span> Option 1</div>}
-                        {question.options[1] && <div className={styles.statsBox}><span className={styles.BigNum}>{question.options[1].opted}</span> Option 2</div>}
-                        {question.options[2] && <div className={styles.statsBox}><span className={styles.BigNum}>{question.options[2].opted}</span> Option 3</div>}
-                        {question.options[3] && <div className={styles.statsBox}><span className={styles.BigNum}>{question.options[3].opted}</span> Option 4</div>}
+                        {question.options[0] && <div className={styles.statsBox}><span className={styles.BigNum}>{question.options[0].opted}</span> {question.options[0].optionText} </div>}
+                        {question.options[1] && <div className={styles.statsBox}><span className={styles.BigNum}>{question.options[1].opted}</span> {question.options[1].optionText} </div>}
+                        {question.options[2] && <div className={styles.statsBox}><span className={styles.BigNum}>{question.options[2].opted}</span> {question.options[2].optionText} </div>}
+                        {question.options[3] && <div className={styles.statsBox}><span className={styles.BigNum}>{question.options[3].opted}</span> {question.options[3].optionText} </div>}
                     </div>
                     <hr />
                 </div>

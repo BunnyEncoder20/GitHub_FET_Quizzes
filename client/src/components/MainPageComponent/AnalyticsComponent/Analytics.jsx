@@ -401,12 +401,12 @@ const Analytics = () => {
       // replace 'quizId' with the id of the quiz you want to delete
       console.log('sending delete request now...');
       const response = await axios.delete(`https://fet-quizzie.onrender.com/FET/deleteQuiz/${jwtDecode(user.token).userId}/${isOpen.quiz}`);
-      console.log("FrontEnd response : ", response);
+      // console.log("FrontEnd response : ", response);
 
       if (response.status === 200) {
         // update user context after successful deletion
         console.log(response.data.message);
-        console.log('User before update:', user);
+        // console.log('User before update:', user);
         const updatedUser = { ...user, userQuizData: user.userQuizData.filter(quiz => quiz.quizId !== isOpen.quiz) };
         await setUser(updatedUser);
 
