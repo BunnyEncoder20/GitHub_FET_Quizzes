@@ -26,6 +26,9 @@ app.listen(process.env.PORT, () => {
         .catch(err => console.log('[Server] Error occurred while starting the server : \n', err))
 })
 
+app.get('/', (req, res) => {
+    res.send('<h1>Quizzie server is Up & Running</h1>')
+})
 
 // Importing routes 
 const signupRoute = require('./routes/signup.routes');
