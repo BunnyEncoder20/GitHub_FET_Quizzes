@@ -6,6 +6,7 @@ Made this repo to stage the development of my Cuvette FET project 2 - Quizzes. T
 
 Ideabook [Link](https://ideabook.club/share/fa8729bb-f4bf-4fad-b759-97c1c4bbf772/)
 Figma [Link](https://www.figma.com/file/XYmWHdBvT55GOtfm9RAFCT/Quiz-Test-(Copy)?node-id=5%3A3380&mode=dev)
+Deployment [Link](https://fet-quizzes-client.vercel.app/mainpage)
 
 **Packages which might be helpful for the project:**
 1. formik -  - [Link]('https://formik.org/')
