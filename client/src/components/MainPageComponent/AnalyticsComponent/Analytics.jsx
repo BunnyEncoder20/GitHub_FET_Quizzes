@@ -37,7 +37,7 @@ const Analytics = () => {
 
   // Toastify function 
   const notify = (msg) => {
-    toast.info(msg, {
+    toast.success(msg, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -45,7 +45,7 @@ const Analytics = () => {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "colored",
+      theme: "light",
     });
   }
 
@@ -53,7 +53,7 @@ const Analytics = () => {
   const copyToClipboard = (link) => {
     navigator.clipboard.writeText(link)
       .then(() => {
-        notify('✅ Link copied to Clipboard');
+        notify(' Link copied to Clipboard');
         console.log('Link Copied to Clipboard')
       })
       .catch(err => {
@@ -619,8 +619,7 @@ const Analytics = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="colored"
-        icon={false}
+        theme="light"
       />
 
     </>

@@ -51,14 +51,14 @@ const MainPage = () => {
       pauseOnHover: true,
       draggable: false,
       progress: undefined,
-      theme: "colored",
+      theme: "light",
     });
   }
 
   // for firing toastify messages , I made a useEffect to go off only on the first time loading of this component
   useEffect(() => {
     if (user && user.token) {
-      notify(`😇 Welcome back ${user.username}`)
+      notify(` Welcome back ${user.username} 😇`)
       // console.log(user);
     }
   }, []);
@@ -346,7 +346,7 @@ const MainPage = () => {
     navigator.clipboard.writeText(shareLink)
       .then(() => {
         console.log('Link copied to clipboard');
-        notify('✅ Link copied to Clipboard');
+        notify(' Link copied to Clipboard');
       })
       .catch(err => {
         console.error('Could not copy text: ', err);
@@ -580,7 +580,6 @@ const MainPage = () => {
         draggable
         pauseOnHover={false}
         theme="light"
-        icon={false}
       />
     </div>
   )
